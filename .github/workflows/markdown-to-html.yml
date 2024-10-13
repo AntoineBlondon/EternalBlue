@@ -22,14 +22,9 @@ jobs:
       run: |
         pip install markdown
 
-    - name: Convert Markdown to HTML
+    - name: Run Markdown to HTML Conversion
       run: |
-        mkdir -p html
-        for file in markdown/*.md; do
-          filename=$(basename "$file" .md)
-          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < "$file" > html/"$filename".html
-        done
-        ls html  # List files in the html directory for verification
+        python scripts/convert_md_to_html.py
 
     - name: Create or Update Pull Request
       uses: peter-evans/create-pull-request@v5
