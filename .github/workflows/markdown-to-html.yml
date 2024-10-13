@@ -39,12 +39,7 @@ jobs:
     - name: Convert Markdown to HTML
       if: env.changed == 'true'  # Only run if there are changes
       run: |
-        mkdir -p html
-        for file in markdown/**/*.md; do
-          filename=$(basename "$file" .md)
-          python convert_md_to_html.py  # Or however you are executing your Python script
-        done
-        ls html  # List files in the html directory for verification
+        python scripts/convert_md_to_html.py
 
     - name: Create or Update Pull Request
       if: env.changed == 'true'  # Only run if there are changes
