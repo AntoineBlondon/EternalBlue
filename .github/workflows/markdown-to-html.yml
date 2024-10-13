@@ -24,13 +24,13 @@ jobs:
 
     - name: Convert Markdown to HTML
       run: |
-        mkdir -p output
+        mkdir -p html
         for file in markdown/*.md; do
-          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < $file > output/${file%.md}.html
+          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < $file > html/${file%.md}.html
         done
 
     - name: Upload HTML files as artifacts
       uses: actions/upload-artifact@v4  # Use v4 instead of v2
       with:
         name: html-files
-        path: output
+        path: html
