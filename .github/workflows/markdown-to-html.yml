@@ -26,7 +26,8 @@ jobs:
       run: |
         mkdir -p html
         for file in markdown/*.md; do
-          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < $file > html/${file%.md}.html
+          filename=$(basename "$file" .md)
+          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < "$file" > html/"$filename".html
         done
 
     - name: Upload HTML files as artifacts
