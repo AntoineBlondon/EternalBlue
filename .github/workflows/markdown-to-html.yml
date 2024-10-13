@@ -34,5 +34,5 @@ jobs:
         branch: update-html
         base: main
         title: "Add generated HTML files"
-        body: "This pull request was automatically created by GitHub Actions to add generated HTML files."
+        body: "This pull request was automatically created by me, gitaction bot, because you changed your repo :)"
         delete-branch: true
