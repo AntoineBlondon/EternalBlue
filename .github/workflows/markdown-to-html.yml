@@ -30,6 +30,17 @@ jobs:
           python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < "$file" > html/"$filename".html
         done
 
+    - name: Commit and push HTML files to repository
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        cp -r html/* .
+        git add *.html
+        git commit -m "Add generated HTML files"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Upload HTML files as artifacts
       uses: actions/upload-artifact@v4  # Use v4 instead of v2
       with:
