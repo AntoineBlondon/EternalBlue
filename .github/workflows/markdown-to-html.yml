@@ -1,0 +1,36 @@
+name: Convert Markdown to HTML
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install markdown
+
+    - name: Convert Markdown to HTML
+      run: |
+        mkdir -p html
+        for file in *.md; do
+          python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < $file > output/${file%.md}.html
+        done
+
+    - name: Upload HTML files as artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: html-files
+        path: output
