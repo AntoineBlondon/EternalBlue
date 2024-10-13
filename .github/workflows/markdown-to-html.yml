@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -29,32 +29,16 @@ jobs:
           filename=$(basename "$file" .md)
           python -c "import markdown, sys; print(markdown.markdown(sys.stdin.read()))" < "$file" > html/"$filename".html
         done
-        ls html  # Check if files are correctly created in the html directory
-
-    - name: Commit changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git checkout -b update-html || git checkout update-html
-        git add html/*.html  # Add only files from the html directory
-        git commit -m "Add generated HTML files" || echo "No changes to commit"
-
-    - name: Push changes to the update-html branch
-      run: |
-        git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" update-html
+        ls html  # List files in the html directory for verification
 
     - name: Create or Update Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        path: html
+        commit-message: "Add generated HTML files"
         branch: update-html
         base: main
         title: "Add generated HTML files"
         body: "This pull request was automatically created by GitHub Actions to add generated HTML files."
         delete-branch: true
-
-    - name: Upload HTML files as artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: html-files
-        path: html
