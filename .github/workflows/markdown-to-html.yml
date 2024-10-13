@@ -43,15 +43,15 @@ jobs:
       run: |
         git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" update-html
 
-    - name: Create or update Pull Request
+    - name: Create or Update Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-html
         base: main
         title: "Add generated HTML files"
-        body: "This pull request was automatically created or updated by GitHub Actions to add generated HTML files."
-        update-existing: true
+        body: "This pull request was automatically created by GitHub Actions to add generated HTML files."
+        delete-branch: true  # Delete branch after merging
 
     - name: Upload HTML files as artifacts
       uses: actions/upload-artifact@v4
