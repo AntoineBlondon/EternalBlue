@@ -35,22 +35,23 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         cp -r html/* .
-        git checkout -b update-html
+        git checkout -b update-html || git checkout update-html
         git add *.html
-        git commit -m "Add generated HTML files"
-    
-    - name: Push changes to a new branch
-      run: |
-        git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" update-html
+        git commit -m "Add generated HTML files" || echo "No changes to commit"
 
-    - name: Create Pull Request
+    - name: Push changes to the update-html branch
+      run: |
+        git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" update-html
+
+    - name: Create or update Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-html
         base: main
         title: "Add generated HTML files"
-        body: "This pull request was created automatically by GitHub Actions to add generated HTML files."
+        body: "This pull request was automatically created or updated by GitHub Actions to add generated HTML files."
+        update-existing: true
 
     - name: Upload HTML files as artifacts
       uses: actions/upload-artifact@v4
