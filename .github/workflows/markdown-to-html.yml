@@ -13,20 +13,41 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Check for Changes in Markdown Folder
+      id: check_changes
+      run: |
+        # Check for any differences in the markdown folder
+        if git diff --quiet HEAD^ HEAD -- markdown; then
+          echo "No changes in the markdown folder"
+          echo "changed=false" >> $GITHUB_ENV
+        else
+          echo "Changes detected in the markdown folder"
+          echo "changed=true" >> $GITHUB_ENV
+        fi
+
     - name: Set up Python
+      if: env.changed == 'true'  # Only run if there are changes
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
     - name: Install dependencies
+      if: env.changed == 'true'  # Only run if there are changes
       run: |
         pip install markdown
 
-    - name: Run Markdown to HTML Conversion
+    - name: Convert Markdown to HTML
+      if: env.changed == 'true'  # Only run if there are changes
       run: |
-        python scripts/convert_md_to_html.py
+        mkdir -p html
+        for file in markdown/**/*.md; do
+          filename=$(basename "$file" .md)
+          python convert_md_to_html.py  # Or however you are executing your Python script
+        done
+        ls html  # List files in the html directory for verification
 
     - name: Create or Update Pull Request
+      if: env.changed == 'true'  # Only run if there are changes
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -34,5 +55,5 @@ jobs:
         branch: update-html
         base: main
         title: "Add generated HTML files"
-        body: "This pull request was automatically created by me, gitaction bot, because you changed your repo :)"
+        body: "This pull request was automatically created by GitHub Actions to add generated HTML files."
         delete-branch: true
