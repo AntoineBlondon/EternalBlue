@@ -12,6 +12,7 @@ for root, dirs, files in os.walk(input_folder):
             filepath = os.path.join(root, filename)
             with open(filepath, 'r') as f:
                 text = f.read()
+                text.replace(".md)", ".html)")
                 html = markdown.markdown(text)
 
             relative_path = os.path.relpath(filepath, input_folder)
