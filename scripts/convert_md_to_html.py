@@ -3,6 +3,7 @@ import markdown
 
 input_folder = 'markdown'
 output_folder = 'html'
+os.makedirs(input_folder, exist_ok=True)
 os.makedirs(output_folder, exist_ok=True)
 
 for root, dirs, files in os.walk(input_folder):
