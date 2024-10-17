@@ -12,3 +12,5 @@ really nice
 
 
 Love it :)
+
+![image](./images/profile.png)
