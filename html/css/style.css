@@ -1,13 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Azeret Mono', monospace;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
     margin: 0;
     padding: 0;
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-left: 25%;
+    padding-right: 25%;
     background-color: #392F5A;
     color: #FFF8F0;
-    font-size: 16px;
+    font-size: 1em;
     text-align: justify;
+    line-height: 1.5em;
 }
 
 a:link {
@@ -23,4 +29,20 @@ a:visited {
 img {
     max-width: 100%;
     height: auto;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    font-weight: bold;
+    border-bottom: white 1px solid;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
