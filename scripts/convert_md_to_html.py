@@ -24,7 +24,7 @@ footer = """
 
 input_folder = 'markdown'
 output_folder = 'html'
-css_folder =  'html/css'
+css_folder =  'markdown/css'
 os.makedirs(input_folder, exist_ok=True)
 os.makedirs(output_folder, exist_ok=True)
 
