@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-left: 30%;
+    padding-right: 30%;
+    background-color: #392F5A;
+    color: #FFF8F0;
+    font-size: 16px;
+    text-align: justify;
+}
+
+a:link {
+    color: #F4D06F;
+    text-decoration: wavy underline;
+}
+
+a:visited {
+    color: #F4D06F;
+    text-decoration: wavy underline;
+}
