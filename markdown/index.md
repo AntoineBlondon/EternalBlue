@@ -1,4 +1,4 @@
-# Hi!
+# Welcome to Eternal Blue
 
 ## Hello, I'm Azure!
 Welcome to my place
