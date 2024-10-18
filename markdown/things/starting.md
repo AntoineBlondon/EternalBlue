@@ -16,3 +16,7 @@ My idea for this website is very simple, I would like to be able to put everythi
 Once you get the idea, you need to start working on an implementation of your idea.
 
 I'll continue later though
+
+
+
+Back to [things](../things.md)
