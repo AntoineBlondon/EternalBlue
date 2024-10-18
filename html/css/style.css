@@ -46,3 +46,9 @@ h2 {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
+@media screen and (max-width: 768px) {
+    body {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
