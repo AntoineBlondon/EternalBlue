@@ -18,12 +18,23 @@ body {
 
 a:link {
     color: #F4D06F;
-    text-decoration: wavy underline;
+    text-decoration: #5FA8D3 underline;
+}
+a:link:hover  {
+    background-color: #5FA8D3;
+    color: #392F5A;
+    text-decoration: none;
 }
 
 a:visited {
     color: #F4D06F;
-    text-decoration: wavy underline;
+    text-decoration: #F4D06F underline;
+}
+
+a:visited:hover {
+    background-color: #F4D06F;
+    color: #392F5A;
+    text-decoration: none;
 }
 
 img {
