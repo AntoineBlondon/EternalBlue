@@ -9,9 +9,6 @@ you can go to [here](things.md) if you want
 
 it's nice
 
-really nice
-
-
-Love it :)
+Have a nice day :)
 
 ![image](./images/profile.png)
