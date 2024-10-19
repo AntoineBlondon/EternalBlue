@@ -20,7 +20,7 @@ a:link {
     color: #F4D06F;
     text-decoration: #5FA8D3 underline;
 }
-a:link:hover  {
+a:link:hover, a:link:focus  {
     background-color: #5FA8D3;
     color: #392F5A;
     text-decoration: none;
@@ -31,7 +31,7 @@ a:visited {
     text-decoration: #F4D06F underline;
 }
 
-a:visited:hover {
+a:visited:hover, a:visited:focus  {
     background-color: #F4D06F;
     color: #392F5A;
     text-decoration: none;
@@ -71,7 +71,7 @@ h2 {
     color: #5FA8D3 !important;
 }
 
-.blue-link:hover {
+.blue-link:hover, .blue-link:focus{
     background-color: #5FA8D3 !important;
     color: #392F5A !important;
     text-decoration: none !important;
