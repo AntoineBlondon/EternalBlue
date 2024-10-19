@@ -37,7 +37,7 @@ for root, dirs, files in os.walk(input_folder):
             with open(filepath, 'r') as f:
                 text = f.read().replace(".md)", ".html)")
                 title = text.split('\n')[0].replace('# ', '')
-                html = markdown.markdown(text)
+                html = markdown.markdown(text, extensions=['attr_list'])
                 html = header(title, css_path) + html + footer
 
             relative_path = os.path.relpath(filepath, input_folder)
