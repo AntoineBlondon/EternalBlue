@@ -63,3 +63,16 @@ h2 {
         padding-right: 5%;
     }
 }
+
+
+
+.blue-link {
+    text-decoration: #5FA8D3 underline !important;
+    color: #5FA8D3 !important;
+}
+
+.blue-link:hover {
+    background-color: #5FA8D3 !important;
+    color: #392F5A !important;
+    text-decoration: none !important;
+}
