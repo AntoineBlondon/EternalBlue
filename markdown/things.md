@@ -6,6 +6,7 @@ Where I put all the stuff I write.
 
 This section is a mess for now, but I will (probably) clean it up later
 
+- [Egg](things/egg.md)
 - [The Art of Limitations](things/the_art_of_limitations.md)
 - [I love doing bad things](things/bad_things.md)
 - [Starting](things/starting.md)
