@@ -77,3 +77,18 @@ h2 {
     color: #392F5A !important;
     text-decoration: none !important;
 }
+
+.large-image {
+    width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.pixel-art {
+    image-rendering: pixelated;
+}
+
+.centered {
+    text-align: center;
+}
