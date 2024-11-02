@@ -1,4 +1,5 @@
 import os
+import shutil
 import markdown
 
 
@@ -45,3 +46,8 @@ for root, dirs, files in os.walk(input_folder):
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             with open(output_path, 'w') as f:
                 f.write(html)
+        elif filename.endswith('.png'): # Copy image
+            filepath = os.path.join(root, filename)
+            relative_path = os.path.relpath(filepath, input_folder)
+            output_path = os.path.join(output_folder, relative_path)
+            shutil.copyfile(filepath, output_path)
