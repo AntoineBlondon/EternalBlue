@@ -11,6 +11,12 @@ This section is a mess for now, but I will (probably) clean it up later
 - [I love doing bad things](things/bad_things.md)
 - [Starting](things/starting.md)
 
+## Postaday
+
+A series where I post stuff everyday for fun
+
+- [Debut](postaday/debut.md)
+
 ## Poems
 
 In french (sorryyyyy)

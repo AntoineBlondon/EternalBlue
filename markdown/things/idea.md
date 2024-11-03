@@ -23,3 +23,12 @@ I would like to become better at [insert thing you want to get better at].
 AI, a fun tool that will end us all
 
 
+# Magic
+
+# Inclusive writing
+
+# Debatable existence
+
+# Coming out to the administration
+
+
