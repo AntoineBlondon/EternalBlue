@@ -10,7 +10,7 @@ I would love to make it a habit.
 
 <br>
 
-A bit like the (poorly drawn comics by parashocx)[https://www.youtube.com/@ParashockX/community] which I find very inspiring and fun. (he got to 1000 recently!)
+A bit like the [poorly drawn comics by parashocx](https://www.youtube.com/@ParashockX/community) which I find very inspiring and fun. (he got to 1000 recently!)
 
 Anyway, we'll see
 
