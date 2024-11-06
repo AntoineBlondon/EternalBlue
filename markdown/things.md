@@ -15,6 +15,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff everyday for fun
 
+- [Sleeping is underrated](postaday/sleeping_is_underrated.md)
 - [Starting out](postaday/starting.md)
 - [Stress (and how to handle it)](postaday/how_to_handle_stress.md)
 - [Debut](postaday/debut.md)
