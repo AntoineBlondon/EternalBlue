@@ -15,6 +15,9 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff everyday for fun
 
+- [Simplicity is fun](postaday/simplicity_is_fun.md)
+- [The Unexpected](postaday/the_unexpected.md)
+- [Memory Management](postaday/memory_management.md)
 - [Tired Eyes](postaday/tired_eyes.md)
 - [Sleeping is underrated](postaday/sleeping_is_underrated.md)
 - [Starting out](postaday/starting.md)

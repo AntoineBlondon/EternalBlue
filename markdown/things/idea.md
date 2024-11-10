@@ -34,3 +34,6 @@ AI, a fun tool that will end us all
 # Lucid dreams
 
 # Voice training
+
+# Who's gonna kill me first? (contest edition)
+
