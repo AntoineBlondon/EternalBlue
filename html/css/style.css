@@ -10,7 +10,7 @@ body {
     padding-left: 25%;
     padding-right: 25%;
     background-color: #392F5A;
-    color: #FFF8F0;
+    color: rgb(255, 248, 240);
     font-size: 1em;
     text-align: justify;
     line-height: 1.5em;
@@ -95,4 +95,25 @@ h2 {
 
 .right {
     text-align: right;
+}
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+}
+
+ul li::before {
+    
+    content: url('../../resources/list.svg');
+    margin: 8px;
+    display: inline;
+    align-self: center; /* Ensures icon is centered in flex container */
+    width: 1em; /* Adjust width if necessary */
+    height: 1em; /* Adjust height if necessary */
+    vertical-align: middle;
+    transform: scale(0.8) translate(0, .3em);
 }
