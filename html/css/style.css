@@ -108,7 +108,7 @@ li {
 
 ul li::before {
     
-    content: url('../../resources/list.svg');
+    content: url('/resources/list.svg');
     margin: 8px;
     display: inline;
     align-self: center; /* Ensures icon is centered in flex container */
