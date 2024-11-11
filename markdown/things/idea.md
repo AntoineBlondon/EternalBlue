@@ -6,6 +6,7 @@
 
 # Binarism
 
+
 # Inspirations
 
 # Do not forget how to breathe
@@ -35,5 +36,9 @@ AI, a fun tool that will end us all
 
 # Voice training
 
-# Who's gonna kill me first? (contest edition)
+# Who's going to kill me first? (contest edition)
+
+# Debugging at 3AM
+
+# Sleep responsibility
 

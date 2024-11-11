@@ -15,6 +15,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff everyday for fun
 
+- [days off](postaday/days_off.md)
 - [Simplicity is fun](postaday/simplicity_is_fun.md)
 - [The Unexpected](postaday/the_unexpected.md)
 - [Memory Management](postaday/memory_management.md)
