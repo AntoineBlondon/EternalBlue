@@ -42,10 +42,5 @@ AI, a fun tool that will end us all
 
 # Sleep responsibility
 
-
-
-
-
-
-# Magic is cool
+# Magic is fun
 
