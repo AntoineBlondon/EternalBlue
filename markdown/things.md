@@ -15,7 +15,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff everyday for fun
 
-- [today is lazy](postaday/today_is_lazy.md)
+- [today_is_lazy](postaday/today_is_lazy.md)
 - [moments pass](postaday/moments_pass.md)
 - [lucid dreams](postaday/lucid_dreams.md)
 - [the abyss](postaday/the_abyss.md)
