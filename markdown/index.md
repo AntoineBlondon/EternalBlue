@@ -19,7 +19,7 @@ it's nice
 
 some other things I did
 
-- A [Cémantix-style web game](https://mantix.azureblue.me)
+- a [cémantix-style web game](https://mantix.azureblue.me)
 
 - an online [timesup website](https://kgbtimesup.vercel.app/)
 
