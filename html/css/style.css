@@ -127,3 +127,11 @@ ul li::before {
 .toki-pona {
     font-family: 'linja pona', monospace;
 }
+
+h1 .toki-pona {
+    font-size: 1.5em;
+}
+
+p .toki-pona {
+    font-size: 1em;
+}

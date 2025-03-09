@@ -1,4 +1,4 @@
-# toki pi jan ale {.toki-pona}
+# toki pi++ jan ale {.toki-pona}
 
 jan pi sona nasa o <br>
 sina wile ala e toki pi++ jan ale <br>
