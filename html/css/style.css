@@ -129,9 +129,11 @@ ul li::before {
 }
 
 h1 .toki-pona {
-    font-size: 1.5em;
+    font-size: 4em;
 }
 
 p .toki-pona {
-    font-size: 1em;
+    font-size: 3em;
+    line-height: normal;
+    font-weight: 400;
 }
