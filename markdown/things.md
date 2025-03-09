@@ -35,8 +35,8 @@ A series where I post stuff everyday for fun
 
 In french (sorryyyyy)
 
-- [son Silence, ma Voie](things/son_silence_ma_voie.md)
-
+- [son Silence, ma Voie | fr](things/son_silence_ma_voie.md)
+- [toki pi jan ale | toki_pona](things/toki_pi_jan_ale.md){: .toki-pona}
 
 <br>
 
