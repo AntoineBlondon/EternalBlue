@@ -124,9 +124,6 @@ ul li::before {
 }
 
 
-.toki-pona {
-    font-family: 'linja pona', monospace;
-}
 
 h1 .toki-pona {
     font-size: 4em;
@@ -135,5 +132,9 @@ h1 .toki-pona {
 p .toki-pona {
     font-size: 3em;
     line-height: normal;
-    font-weight: 400;
+}
+
+.toki-pona {
+    font-family: 'linja pona', monospace;
+    font-size: 1.5em;
 }
