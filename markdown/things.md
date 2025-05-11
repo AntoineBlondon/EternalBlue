@@ -15,21 +15,22 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff for fun
 
-- [today_is_lazy](postaday/today_is_lazy.md)
-- [moments pass](postaday/moments_pass.md)
-- [lucid dreams](postaday/lucid_dreams.md)
-- [the abyss](postaday/the_abyss.md)
-- [talk to me](postaday/talk_to_me.md)
-- [chemistry is witchcraft](postaday/chemistry_is_witchcraft.md)
-- [days off](postaday/days_off.md)
-- [Simplicity is fun](postaday/simplicity_is_fun.md)
-- [The Unexpected](postaday/the_unexpected.md)
-- [Memory Management](postaday/memory_management.md)
-- [Tired Eyes](postaday/tired_eyes.md)
-- [Sleeping is underrated](postaday/sleeping_is_underrated.md)
-- [Starting out](postaday/starting.md)
-- [Stress (and how to handle it)](postaday/how_to_handle_stress.md)
-- [Debut](postaday/debut.md)
+- [hello again](postaday/16_hello_again.md)
+- [today_is_lazy](postaday/15_today_is_lazy.md)
+- [moments pass](postaday/14_moments_pass.md)
+- [lucid dreams](postaday/13_lucid_dreams.md)
+- [the abyss](postaday/12_the_abyss.md)
+- [talk to me](postaday/11_talk_to_me.md)
+- [chemistry is witchcraft](postaday/10_chemistry_is_witchcraft.md)
+- [days off](postaday/09_days_off.md)
+- [Simplicity is fun](postaday/08_simplicity_is_fun.md)
+- [The Unexpected](postaday/07_the_unexpected.md)
+- [Memory Management](postaday/06_memory_management.md)
+- [Tired Eyes](postaday/05_tired_eyes.md)
+- [Sleeping is underrated](postaday/04_sleeping_is_underrated.md)
+- [Starting out](postaday/03_starting.md)
+- [Stress (and how to handle it)](postaday/02_how_to_handle_stress.md)
+- [Debut](postaday/01_debut.md)
 
 ## Poems
 
