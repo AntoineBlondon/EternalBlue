@@ -13,7 +13,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 ## Postaday
 
-A series where I post stuff everyday for fun
+A series where I post stuff for fun
 
 - [today_is_lazy](postaday/today_is_lazy.md)
 - [moments pass](postaday/moments_pass.md)
