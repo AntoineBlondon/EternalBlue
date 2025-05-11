@@ -67,9 +67,51 @@ h2 {
     body {
         padding-left: 5%;
         padding-right: 5%;
+        padding-top: 2em;
     }
 }
 
+
+.navbar {
+    background-color: #5FA8D3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.navbar a {
+    color: #392F5A;
+    text-decoration: none;
+    padding: .1em;
+    margin: 0 .5em;
+}
+
+.navbar a:visited {
+    color: #392F5A;
+    text-decoration: none;
+    padding: .1em;
+}
+
+.navbar a:visited:hover, .navbar a:visited:focus {
+    background-color: #392F5A;
+    color: #5FA8D3;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: .1em;
+    border-radius: 0;
+}
+
+.navbar a:link:hover, .navbar a:link:focus {
+    background-color: #392F5A;
+    color: #5FA8D3;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: .1em;
+    border-radius: 0;
+}
 
 
 .blue-link {

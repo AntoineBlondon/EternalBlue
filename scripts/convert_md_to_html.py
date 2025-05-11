@@ -15,6 +15,13 @@ def header(title, css_path):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <header>
+        <div class="navbar">
+            <a href="index.html">home</a>
+            <a href="projects.html">projects</a>
+            <a href="about.html">about</a>
+        </div>
+    </header>
 """
 
 footer = """
