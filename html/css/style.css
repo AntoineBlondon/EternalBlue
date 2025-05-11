@@ -57,7 +57,7 @@ h1 {
 
 h2 {
     font-weight: bold;
-    border-bottom: white 1px solid;
+    border-bottom: white 1px dashed;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     margin-top: 0.5em;
