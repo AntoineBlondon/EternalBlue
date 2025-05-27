@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'linja pona';
-    src: url("/resources/linja-pona-4.9.otf") format("opentype");
+    src: url("../resources/linja-pona-4.9.otf") format("opentype");
 }
 
 body {
