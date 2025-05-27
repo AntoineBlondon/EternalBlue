@@ -42,4 +42,4 @@ See you tomorrow!
 
 sleep well tonight :)<br><br>
 
-Back to the [things](../things.md)
+Back to the [things](../things)

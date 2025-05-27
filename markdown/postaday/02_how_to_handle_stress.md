@@ -33,4 +33,4 @@ See you tomorrow!
 
 have a nice day :)<br><br>
 
-Back to the [things](../things.md)
+Back to the [things](../things)

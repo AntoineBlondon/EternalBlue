@@ -13,7 +13,7 @@ who knows?
 
 There's a good chance I will talk about my studies (2nd year engineering), but don't worry (haha I saw you there), as I'll make it a challenge to make it 'not boring' to anyone. (everything is relative though)
 
-Maybe i'll write small ideas I have, small poems, or just random thoughts. My goal is not to make good things (as [I love making bad things](../things/bad_things.md)).
+Maybe i'll write small ideas I have, small poems, or just random thoughts. My goal is not to make good things (as [I love making bad things](../things/bad_things)).
 
 Anyway, I will call this series Postaday<br>
 (it is very fun to say (try it!))
@@ -23,4 +23,4 @@ See you tomorrow then!
 
 have a nice day :)<br><br>
 
-Back to the [things](../things.md)
+Back to the [things](../things)
