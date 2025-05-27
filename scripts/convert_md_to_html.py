@@ -73,7 +73,7 @@ for root, dirs, files in os.walk(input_folder):
             with open(output_path, 'w') as f:
                 f.write(html)
 
-        elif filename.endswith('.png'):
+        else:
             filepath = os.path.join(root, filename)
             relative_path = os.path.relpath(filepath, input_folder)
             output_path = os.path.join(output_folder, relative_path)
