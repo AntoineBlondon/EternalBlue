@@ -36,4 +36,4 @@ I invite you, fellow students, future engineers, creators, thinkers, not to shy 
 
 <br>
 
-back to [things](../things.md)
+back to [things](things)

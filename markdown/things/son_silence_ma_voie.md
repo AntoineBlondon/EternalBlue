@@ -20,4 +20,4 @@ Alors partageons ce corps, uni.es dans sa peur,<br>
 
 <br>
 
-Back to [things](../things.md)
+Back to [things](things)

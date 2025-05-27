@@ -51,4 +51,4 @@ next time you have a weird idea, think about how fun it could be to do and if it
 
 <br>
 
-back to [(bad) things](../things.md)
+back to [(bad) things](things)

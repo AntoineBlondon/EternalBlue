@@ -10,7 +10,7 @@ this is somewhere I put things I like
 
 please have a seat, put yourself at ease
 
-you can go to [here](things.md) if you want
+you can go to [here](things) if you want
 
 it's nice
 

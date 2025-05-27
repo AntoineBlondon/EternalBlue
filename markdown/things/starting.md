@@ -19,4 +19,4 @@ I'll continue later though
 
 <br>
 
-Back to [things](../things.md)
+Back to [things](things)
