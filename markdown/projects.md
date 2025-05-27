@@ -2,4 +2,4 @@
 
 ## Spectre
 
-[link](spectre)
+[link](projects/spectre)
