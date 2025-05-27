@@ -7,4 +7,4 @@ lon seme la sina toki <br>
 
 <br><br>
 
-Back to the [things](things)
+Back to the [things](../things)
