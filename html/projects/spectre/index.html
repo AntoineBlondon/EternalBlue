@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spectre</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="./">home</a>
+            <a href="./projects">projects</a>
+            <a href="./about">about</a>
+        </div>
+    </header>
+    <h1>Spectre</h1>
+    <canvas id="spectrogram" width="800" height="256"></canvas>
+    <div id="pitch">Pitch: -- Hz (--)</div>
+    <div id="controls">
+        <button id="start">Start</button>
+        <button id="stop" disabled>Stop</button>
+        <button id="play" disabled>Play</button>
+        <button id="download" disabled>Download WAV</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
