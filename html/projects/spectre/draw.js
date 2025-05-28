@@ -42,6 +42,7 @@ function drawSpectrogram() {
     ctx.fillStyle = getColorForValue(val);
     ctx.fillRect(axisWidth + x, y, 1, 1);
   }
+  ctx.fillRect(axisWidth + x, 10, 1, 1);
 
   // Draw pitch curve
   ctx.beginPath();
