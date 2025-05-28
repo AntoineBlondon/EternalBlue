@@ -74,18 +74,21 @@ startBtn.onclick = async () => {
 
     ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
 
-    for (let i = 1; i < dataArray.length; i++) {
-      const freq = i * freqBinSize;
+    for (let py = 0; py < canvas.height; py++) {
+      // Map pixel Y to frequency (log scale)
+      const freq = Math.pow(10, logMax - (py / canvas.height) * (logMax - logMin));
       if (freq < minFreq || freq > maxFreq) continue;
 
-      const y = freqToY(freq);
-      const val = dataArray[i];
+      const binIndex = Math.round(freq / freqBinSize);
+      if (binIndex >= dataArray.length) continue;
+
+      const val = dataArray[binIndex];
       const hue = 240 - (val * 240) / 255;
       ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-      ctx.fillRect(axisWidth + x, y, 1, 1);
+      ctx.fillRect(axisWidth + x, py, 1, 1);
     }
 
-    // Pitch curve
+    // Draw pitch curve
     ctx.beginPath();
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
@@ -93,7 +96,7 @@ startBtn.onclick = async () => {
       const pitch = pitchHistory[i];
       if (!pitch || pitch < minFreq || pitch > maxFreq) continue;
 
-      const y = freqToY(pitch);
+      const y = canvas.height - (Math.log10(pitch) - logMin) / (logMax - logMin) * canvas.height;
       const px = axisWidth + i;
       if (i === 0 || !pitchHistory[i - 1]) {
         ctx.moveTo(px, y);
@@ -112,17 +115,21 @@ startBtn.onclick = async () => {
 
     const freqs = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
     for (let hz of freqs) {
-      const y = freqToY(hz);
+      const y = canvas.height - (Math.log10(hz) - logMin) / (logMax - logMin) * canvas.height;
       ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
+
+      // Optional faint grid line
       ctx.beginPath();
-      ctx.moveTo(axisWidth - 2, y);
-      ctx.lineTo(axisWidth, y);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+      ctx.moveTo(axisWidth, y);
+      ctx.lineTo(canvas.width, y);
       ctx.stroke();
     }
 
     x = (x + 1) % (canvas.width - axisWidth);
     animationId = requestAnimationFrame(drawSpectrogram);
   }
+
 
   drawSpectrogram();
 };

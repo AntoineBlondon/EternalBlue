@@ -187,7 +187,6 @@ ul li::before {
 
 canvas {
     display: block;
-    overflow: visible;
 }
 #controls {
     margin-top: 10px;
