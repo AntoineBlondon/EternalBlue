@@ -121,3 +121,15 @@ function startDrawing(analyserNode, pitchHist, minFreq, maxFreq, scale) {
 function stopDrawing() {
   cancelAnimationFrame(animationId);
 }
+
+
+/**
+ * Maps a frequency magnitude (0–255) to a color.
+ * Blue (low) → Green → Red (high).
+ * @param {number} val - Magnitude from getByteFrequencyData (0–255)
+ * @returns {string} - HSL color string
+ */
+function getColorForValue(val) {
+  const hue = 240 - (val * 240) / 255; // 240 (blue) to 0 (red)
+  return `hsl(${hue}, 100%, 50%)`;
+}
