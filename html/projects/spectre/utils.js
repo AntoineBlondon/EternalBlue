@@ -36,7 +36,6 @@ function yToFreq(y, canvasHeight, minFreq, maxFreq, scale = 'log') {
         const logMin = Math.log10(minFreq);
         const logMax = Math.log10(maxFreq);
         const logFreq = logMax - (y / canvasHeight) * (logMax - logMin);
-        console.log(logFreq);
         return Math.pow(10, logFreq);
     } else {
         return maxFreq * (1 - y / canvasHeight);

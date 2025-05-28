@@ -42,8 +42,6 @@ startBtn.onclick = async () => {
     downloadBtn.disabled = false;
   };
   recorder.start();
-
-  setBounds(minFreq, maxFreq);
   startDrawing(getAnalyser(), pitchStream, minFreq, maxFreq, scale);
 };
 
