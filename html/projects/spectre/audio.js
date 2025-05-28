@@ -58,3 +58,49 @@ function stopAudio() {
   if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
   if (pitchNode) pitchNode.disconnect();
 }
+
+/**
+ * Detects the pitch (fundamental frequency) of a signal using autocorrelation.
+ * @param {Float32Array} buffer - The input audio buffer.
+ * @param {number} sampleRate - The sampling rate of the audio.
+ * @returns {number|null} - Detected pitch in Hz, or null if no strong pitch is found.
+ */
+function detectPitch(buffer, sampleRate) {
+  const SIZE = buffer.length;
+  let rms = 0;
+
+  for (let i = 0; i < SIZE; i++) {
+    const val = buffer[i];
+    rms += val * val;
+  }
+  rms = Math.sqrt(rms / SIZE);
+  if (rms < 0.01) return null; // too quiet
+
+  let bestOffset = -1;
+  let bestCorrelation = 0;
+  const correlations = new Array(SIZE).fill(0);
+
+  for (let offset = 32; offset < 512; offset++) {
+    let correlation = 0;
+
+    for (let i = 0; i < SIZE - offset; i++) {
+      correlation += buffer[i] * buffer[i + offset];
+    }
+
+    correlation = correlation / (SIZE - offset);
+    correlations[offset] = correlation;
+
+    if (correlation > bestCorrelation) {
+      bestCorrelation = correlation;
+      bestOffset = offset;
+    }
+  }
+
+  if (bestCorrelation > 0.9) {
+    const estimatedPeriod = bestOffset;
+    const frequency = sampleRate / estimatedPeriod;
+    return frequency;
+  }
+
+  return null;
+}
