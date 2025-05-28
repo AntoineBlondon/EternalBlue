@@ -15,8 +15,8 @@
     </header>
     <h1>Spectre</h1>
     <div style="position: relative; width: 800px; height: 512px;">
-        <canvas id="spectrogram" width="900" height="512" style="position: absolute; left: 0;"></canvas>
-        <canvas id="hoverLine" width="900" height="512" style="position: absolute; left: 0; pointer-events: none;"></canvas>
+        <canvas id="spectrogram" width="1000" height="600" style="position: absolute; left: 0;"></canvas>
+        <canvas id="hoverLine" width="1000" height="600" style="position: absolute; left: 0; pointer-events: none;"></canvas>
     </div>
     <div id="pitch"></div>
     <div id="controls">
@@ -25,6 +25,10 @@
         <button id="play" disabled>Play</button>
         <button id="download" disabled>Download WAV</button>
     </div>
-    <script src="spectre/app.js"></script>
+    <script src="spectre/utils.js"></script>
+    <script src="spectre/hover.js"></script>
+    <script src="spectre/audio.js"></script>
+    <script src="spectre/draw.js"></script>
+    <script src="spectre/main.js"></script>
 </body>
 </html>
