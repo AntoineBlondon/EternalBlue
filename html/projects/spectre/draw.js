@@ -31,6 +31,7 @@ function drawSpectrogram() {
 
   const { minFreq, maxFreq, scale, axisWidth } = config;
 
+    console.log(ctx);
   // Clear vertical slice at x position (excluding axis)
   ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
   for (let i = 0; i < bufferLength; i++) {
@@ -42,7 +43,6 @@ function drawSpectrogram() {
     ctx.fillStyle = getColorForValue(val);
     ctx.fillRect(axisWidth + x, y, 1, 1);
   }
-  ctx.fillRect(axisWidth + x, 10, 1, 1);
 
   // Draw pitch curve
   ctx.beginPath();
