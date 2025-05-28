@@ -79,7 +79,7 @@ startBtn.onclick = async () => {
   const maxBin = Math.floor(maxFreq / freqBinSize);
 
   const height = canvas.height;
-  const axisWidth = 40; // Width for the frequency axis
+  const axisWidth = 100; // Width for the frequency axis
 
   // Clear only the drawing area (not the axis)
   ctx.clearRect(axisWidth + x, 0, 1, height);
