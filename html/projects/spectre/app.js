@@ -225,10 +225,11 @@ canvas.addEventListener("mousemove", (e) => {
   hoverCtx.stroke();
 
   // Display pitch at this Y position
-  const midi = 128 * (1 - y / canvas.height);
-  const frequency = 440 * Math.pow(2, (midi - 69) / 12);
+  const maxFreq = 10000; // same as in drawSpectrogram
+  const frequency = maxFreq * (1 - y / canvas.height);
   const note = pitchToNote(frequency);
   pitchDisplay.textContent = `Hover Pitch: ${frequency.toFixed(1)} Hz (${note})`;
+
 });
 
 canvas.addEventListener("mouseleave", () => {
