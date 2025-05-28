@@ -52,89 +52,77 @@ startBtn.onclick = async () => {
   processor = audioContext.createScriptProcessor(2048, 1, 1);
   source.connect(processor);
   processor.connect(audioContext.destination);
-  /*
-  processor.onaudioprocess = (e) => {
-    const input = e.inputBuffer.getChannelData(0);
-    const pitch = detectPitch(input, audioContext.sampleRate);
-    if (pitch) {
-      const note = pitchToNote(pitch);
-      pitchDisplay.textContent = `Pitch: ${pitch.toFixed(1)} Hz (${note})`;
-      pitchHistory.push(pitch);
-    } else {
-      pitchDisplay.textContent = `Pitch: -- Hz (--)`;
-      pitchHistory.push(null);
-    }
-    if (pitchHistory.length > maxHistoryLength) pitchHistory.shift();
-  };*/
+
+  const minFreq = 50;
+  const maxFreq = 10000;
+  const axisWidth = 100;
+  const logMin = Math.log10(minFreq);
+  const logMax = Math.log10(maxFreq);
 
   x = 0;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  function freqToY(freq) {
+    return canvas.height - (Math.log10(freq) - logMin) / (logMax - logMin) * canvas.height;
+  }
+
   function drawSpectrogram() {
-  analyser.getByteFrequencyData(dataArray);
+    analyser.getByteFrequencyData(dataArray);
 
-  const nyquist = audioContext.sampleRate / 2;
-  const freqBinSize = nyquist / dataArray.length;
-  const maxFreq = 10000;
-  const maxBin = Math.floor(maxFreq / freqBinSize);
+    const nyquist = audioContext.sampleRate / 2;
+    const freqBinSize = nyquist / dataArray.length;
 
-  const height = canvas.height;
-  const axisWidth = 100; // Width for the frequency axis
+    ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
 
-  // Clear only the drawing area (not the axis)
-  ctx.clearRect(axisWidth + x, 0, 1, height);
+    for (let i = 1; i < dataArray.length; i++) {
+      const freq = i * freqBinSize;
+      if (freq < minFreq || freq > maxFreq) continue;
 
-  // Draw frequency bars for current x
-  for (let i = 0; i < maxBin; i++) {
-  const val = dataArray[i];
-  const hue = 240 - (val * 240) / 255;
-  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-
-  const y = canvas.height - Math.floor((i / maxBin) * canvas.height);
-  ctx.fillRect(axisWidth + x, y, 1, 1); // Draw 1 vertical pixel per frequency
-}
-
-  // Draw pitch curve
-  ctx.beginPath();
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 1;
-  for (let i = 0; i < pitchHistory.length; i++) {
-    const pitch = pitchHistory[i];
-    if (!pitch || pitch > maxFreq) continue;
-
-    const y = height - (pitch / maxFreq) * height;
-    const px = axisWidth + i;
-    if (i === 0 || !pitchHistory[i - 1]) {
-      ctx.moveTo(px, y);
-    } else {
-      ctx.lineTo(px, y);
+      const y = freqToY(freq);
+      const val = dataArray[i];
+      const hue = 240 - (val * 240) / 255;
+      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      ctx.fillRect(axisWidth + x, y, 1, 1);
     }
-  }
-  ctx.stroke();
 
-  // Draw frequency axis
-  ctx.clearRect(0, 0, axisWidth, height);
-  ctx.fillStyle = "white";
-  ctx.font = "12px Azeret Mono";
-  ctx.textAlign = "right";
-  ctx.textBaseline = "middle";
-
-  for (let hz = 0; hz <= maxFreq; hz += 500) {
-    const y = canvas.height - (hz / maxFreq) * canvas.height;
-    ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
-    
-    // Optional: tick mark
+    // Pitch curve
     ctx.beginPath();
-    ctx.moveTo(axisWidth - 2, y);
-    ctx.lineTo(axisWidth, y);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < pitchHistory.length; i++) {
+      const pitch = pitchHistory[i];
+      if (!pitch || pitch < minFreq || pitch > maxFreq) continue;
+
+      const y = freqToY(pitch);
+      const px = axisWidth + i;
+      if (i === 0 || !pitchHistory[i - 1]) {
+        ctx.moveTo(px, y);
+      } else {
+        ctx.lineTo(px, y);
+      }
+    }
     ctx.stroke();
+
+    // Frequency axis
+    ctx.clearRect(0, 0, axisWidth, canvas.height);
+    ctx.fillStyle = "white";
+    ctx.font = "12px Azeret Mono";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    const freqs = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
+    for (let hz of freqs) {
+      const y = freqToY(hz);
+      ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
+      ctx.beginPath();
+      ctx.moveTo(axisWidth - 2, y);
+      ctx.lineTo(axisWidth, y);
+      ctx.stroke();
+    }
+
+    x = (x + 1) % (canvas.width - axisWidth);
+    animationId = requestAnimationFrame(drawSpectrogram);
   }
-
-  // Increment x and wrap around
-  x = (x + 1) % (canvas.width - axisWidth);
-  animationId = requestAnimationFrame(drawSpectrogram);
-}
-
 
   drawSpectrogram();
 };
@@ -143,7 +131,6 @@ stopBtn.onclick = () => {
   stopBtn.disabled = true;
   startBtn.disabled = false;
   cancelAnimationFrame(animationId);
-
   recorder.stop();
   audioContext.close();
   mediaStream.getTracks().forEach(track => track.stop());
@@ -189,7 +176,6 @@ function detectPitch(buffer, sampleRate) {
     }
     lastCorrelation = correlation;
   }
-  console.log(bestCorrelation, bestOffset);
   if (bestCorrelation > 0.9 && bestOffset !== -1) {
     return sampleRate / bestOffset;
   }
@@ -206,6 +192,7 @@ function pitchToNote(frequency) {
   return `${name}${octave}`;
 }
 
+// Hover logic
 const hoverCanvas = document.getElementById("hoverLine");
 const hoverCtx = hoverCanvas.getContext("2d");
 
@@ -213,10 +200,7 @@ canvas.addEventListener("mousemove", (e) => {
   const rect = canvas.getBoundingClientRect();
   const y = e.clientY - rect.top;
 
-  // Clear previous hover line
   hoverCtx.clearRect(0, 0, hoverCanvas.width, hoverCanvas.height);
-
-  // Draw semi-opaque horizontal line
   hoverCtx.beginPath();
   hoverCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
   hoverCtx.lineWidth = 1;
@@ -224,15 +208,16 @@ canvas.addEventListener("mousemove", (e) => {
   hoverCtx.lineTo(hoverCanvas.width, y);
   hoverCtx.stroke();
 
-  // Display pitch at this Y position
-  const maxFreq = 10000; // same as in drawSpectrogram
-  const frequency = maxFreq * (1 - y / canvas.height);
+  const minFreq = 50;
+  const maxFreq = 10000;
+  const logMin = Math.log10(minFreq);
+  const logMax = Math.log10(maxFreq);
+  const frequency = Math.pow(10, logMax - (y / canvas.height) * (logMax - logMin));
   const note = pitchToNote(frequency);
   pitchDisplay.textContent = `Hover Pitch: ${frequency.toFixed(1)} Hz (${note})`;
-
 });
 
 canvas.addEventListener("mouseleave", () => {
   hoverCtx.clearRect(0, 0, hoverCanvas.width, hoverCanvas.height);
-  pitchDisplay.textContent = ""; // Clear pitch display
+  pitchDisplay.textContent = "";
 });
