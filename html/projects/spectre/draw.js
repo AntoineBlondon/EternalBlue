@@ -21,6 +21,7 @@ function initDrawing(c, a, pitchHist, options = {}) {
  * Draw one frame of the spectrogram
  */
 function drawSpectrogram() {
+    console.log("Drawing frame", x);
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
   analyser.getByteFrequencyData(dataArray);
