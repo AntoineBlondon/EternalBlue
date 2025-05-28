@@ -7,7 +7,7 @@ let canvas, hoverCanvas, hoverCtx, config, displayElement;
  * @param {HTMLElement} outputElement - Element to display the frequency/note.
  * @param {object} options - Configuration (minFreq, maxFreq, scale).
  */
-export function initHover(mainCanvas, overlayCanvas, outputElement, options = {}) {
+ function initHover(mainCanvas, overlayCanvas, outputElement, options = {}) {
   canvas = mainCanvas;
   hoverCanvas = overlayCanvas;
   hoverCtx = hoverCanvas.getContext("2d");
