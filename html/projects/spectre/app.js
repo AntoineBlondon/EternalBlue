@@ -176,3 +176,31 @@ function pitchToNote(frequency) {
   const name = notes[n % 12];
   return `${name}${octave}`;
 }
+
+canvas.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const y = e.clientY - rect.top;
+
+  // Redraw current frame before drawing the line
+  // This creates a temporary copy to avoid affecting animation state
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  ctx.putImageData(imageData, 0, 0);
+
+  // Draw semi-opaque horizontal line
+  ctx.beginPath();
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+  ctx.lineWidth = 1;
+  ctx.moveTo(0, y);
+  ctx.lineTo(canvas.width, y);
+  ctx.stroke();
+
+  // Display the pitch corresponding to the hovered y position
+  const midi = 128 * (1 - y / canvas.height);
+  const frequency = 440 * Math.pow(2, (midi - 69) / 12);
+  const note = pitchToNote(frequency);
+  pitchDisplay.textContent = `Hover Pitch: ${frequency.toFixed(1)} Hz (${note})`;
+});
+
+canvas.addEventListener("mouseleave", () => {
+  pitchDisplay.textContent = ""; // Clear hover pitch on exit
+});
