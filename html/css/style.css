@@ -186,6 +186,8 @@ ul li::before {
 
 
 canvas {
+    border: 2px solid white;
+    border-radius: 5px;
     display: block;
 }
 #controls {
