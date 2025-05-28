@@ -86,13 +86,13 @@ startBtn.onclick = async () => {
 
   // Draw frequency bars for current x
   for (let i = 0; i < maxBin; i++) {
-    const val = dataArray[i];
-    const hue = 240 - (val * 240) / 255;
-    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+  const val = dataArray[i];
+  const hue = 240 - (val * 240) / 255;
+  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-    const y = height - (i / maxBin) * height;
-    ctx.fillRect(axisWidth + x, y, 1, height / maxBin);
-  }
+  const y = canvas.height - Math.floor((i / maxBin) * canvas.height);
+  ctx.fillRect(axisWidth + x, y, 1, 1); // Draw 1 vertical pixel per frequency
+}
 
   // Draw pitch curve
   ctx.beginPath();
