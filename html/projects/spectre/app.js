@@ -119,7 +119,7 @@ startBtn.onclick = async () => {
   ctx.textAlign = "right";
   ctx.textBaseline = "middle";
 
-  for (let hz = 0; hz <= maxFreq; hz += 200) {
+  for (let hz = 0; hz <= maxFreq; hz += 500) {
     const y = canvas.height - (hz / maxFreq) * canvas.height;
     ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
     
