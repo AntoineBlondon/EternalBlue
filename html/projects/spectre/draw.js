@@ -90,6 +90,10 @@ function drawAxis() {
 
   for (const hz of freqs) {
     const y = freqToY(hz, canvas.height, scale, minFreq, maxFreq);
+
+    // Skip labels that are too close to the edges
+    if (y < 10 || y > canvas.height - 10) continue;
+
     ctx.fillText(`${Math.round(hz)} Hz`, axisWidth - 4, y);
     ctx.beginPath();
     ctx.moveTo(axisWidth - 2, y);
