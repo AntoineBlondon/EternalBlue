@@ -72,23 +72,26 @@ startBtn.onclick = async () => {
 
   function drawSpectrogram() {
   analyser.getByteFrequencyData(dataArray);
-  const height = canvas.height;
 
-  // Define frequency mapping
   const nyquist = audioContext.sampleRate / 2;
   const freqBinSize = nyquist / dataArray.length;
   const maxFreq = 1000;
   const maxBin = Math.floor(maxFreq / freqBinSize);
 
-  // Draw frequency bars
+  const height = canvas.height;
+  const axisWidth = 40; // Width for the frequency axis
+
+  // Clear only the drawing area (not the axis)
+  ctx.clearRect(axisWidth + x, 0, 1, height);
+
+  // Draw frequency bars for current x
   for (let i = 0; i < maxBin; i++) {
     const val = dataArray[i];
     const hue = 240 - (val * 240) / 255;
     ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-    // Map frequency bin to canvas height
-    const y = canvas.height - (i / maxBin) * canvas.height;
-    ctx.fillRect(x, y, 1, canvas.height / maxBin);
+    const y = height - (i / maxBin) * height;
+    ctx.fillRect(axisWidth + x, y, 1, height / maxBin);
   }
 
   // Draw pitch curve
@@ -97,39 +100,36 @@ startBtn.onclick = async () => {
   ctx.lineWidth = 1;
   for (let i = 0; i < pitchHistory.length; i++) {
     const pitch = pitchHistory[i];
-    if (!pitch || pitch > 1000) continue;
+    if (!pitch || pitch > maxFreq) continue;
 
-    const y = canvas.height - (pitch / maxFreq) * canvas.height;
+    const y = height - (pitch / maxFreq) * height;
+    const px = axisWidth + i;
     if (i === 0 || !pitchHistory[i - 1]) {
-      ctx.moveTo(i, y);
+      ctx.moveTo(px, y);
     } else {
-      ctx.lineTo(i, y);
+      ctx.lineTo(px, y);
     }
   }
   ctx.stroke();
 
-  // Draw frequency axis (left side)
+  // Draw frequency axis
+  ctx.clearRect(0, 0, axisWidth, height);
   ctx.fillStyle = "black";
   ctx.font = "12px sans-serif";
   ctx.textAlign = "right";
   ctx.textBaseline = "middle";
 
-  ctx.clearRect(0, 0, 30, canvas.height); // Clear left side for axis
   for (let hz = 0; hz <= maxFreq; hz += 200) {
-    const y = canvas.height - (hz / maxFreq) * canvas.height;
-    ctx.fillText(`${hz} Hz`, 28, y);
+    const y = height - (hz / maxFreq) * height;
+    ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
     ctx.beginPath();
-    ctx.moveTo(30, y);
-    ctx.lineTo(35, y);
+    ctx.moveTo(axisWidth - 2, y);
+    ctx.lineTo(axisWidth, y);
     ctx.stroke();
   }
 
-  x = (x + 1) % canvas.width;
-  if (x === 0) {
-    ctx.clearRect(30, 0, canvas.width - 30, canvas.height);
-    x = 35; // Skip the axis margin
-  }
-
+  // Increment x and wrap around
+  x = (x + 1) % (canvas.width - axisWidth);
   animationId = requestAnimationFrame(drawSpectrogram);
 }
 
