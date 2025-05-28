@@ -177,24 +177,25 @@ function pitchToNote(frequency) {
   return `${name}${octave}`;
 }
 
+const hoverCanvas = document.getElementById("hoverLine");
+const hoverCtx = hoverCanvas.getContext("2d");
+
 canvas.addEventListener("mousemove", (e) => {
   const rect = canvas.getBoundingClientRect();
   const y = e.clientY - rect.top;
 
-  // Redraw current frame before drawing the line
-  // This creates a temporary copy to avoid affecting animation state
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  ctx.putImageData(imageData, 0, 0);
+  // Clear previous hover line
+  hoverCtx.clearRect(0, 0, hoverCanvas.width, hoverCanvas.height);
 
   // Draw semi-opaque horizontal line
-  ctx.beginPath();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-  ctx.lineWidth = 1;
-  ctx.moveTo(0, y);
-  ctx.lineTo(canvas.width, y);
-  ctx.stroke();
+  hoverCtx.beginPath();
+  hoverCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+  hoverCtx.lineWidth = 1;
+  hoverCtx.moveTo(0, y);
+  hoverCtx.lineTo(hoverCanvas.width, y);
+  hoverCtx.stroke();
 
-  // Display the pitch corresponding to the hovered y position
+  // Display pitch at this Y position
   const midi = 128 * (1 - y / canvas.height);
   const frequency = 440 * Math.pow(2, (midi - 69) / 12);
   const note = pitchToNote(frequency);
@@ -202,5 +203,6 @@ canvas.addEventListener("mousemove", (e) => {
 });
 
 canvas.addEventListener("mouseleave", () => {
-  pitchDisplay.textContent = ""; // Clear hover pitch on exit
+  hoverCtx.clearRect(0, 0, hoverCanvas.width, hoverCanvas.height);
+  pitchDisplay.textContent = ""; // Clear pitch display
 });

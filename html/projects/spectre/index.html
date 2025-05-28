@@ -14,7 +14,10 @@
         </div>
     </header>
     <h1>Spectre</h1>
-    <canvas id="spectrogram" width="800" height="256"></canvas>
+    <div style="position: relative; width: 800px; height: 512px;">
+        <canvas id="spectrogram" width="800" height="512"></canvas>
+        <canvas id="hoverLine" width="800" height="512" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+    </div>
     <div id="pitch">Pitch: -- Hz (--)</div>
     <div id="controls">
         <button id="start">Start</button>
