@@ -43,7 +43,6 @@ startBtn.onclick = async () => {
   };
   recorder.start();
 
-  setScale(scale);
   setBounds(minFreq, maxFreq);
   startDrawing(getAnalyser(), pitchStream, minFreq, maxFreq, scale);
 };
