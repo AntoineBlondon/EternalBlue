@@ -28,7 +28,7 @@ async function setupAudio() {
   source.connect(analyser);
 
   // Pitch detection with AudioWorklet
-  const pitchNode = new AudioWorkletNode(audioContext, 'pitch-processor');
+  pitchNode = new AudioWorkletNode(audioContext, 'pitch-processor');
   pitchHistory = [];
 
   pitchNode.port.onmessage = (event) => {
