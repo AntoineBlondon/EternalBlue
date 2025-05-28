@@ -16,10 +16,6 @@ let mediaStream;
 let animationId;
 let x = 0;
 let recordedBlob;
-const nyquist = audioContext.sampleRate / 2;
-const freqBinSize = nyquist / bufferLength; // Hz per bin
-const maxFreq = 1000;
-const maxBin = Math.floor(maxFreq / freqBinSize);
 
 const pitchHistory = [];
 const maxHistoryLength = canvas.width;
