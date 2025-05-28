@@ -1,22 +1,16 @@
-let canvas, hoverCanvas, hoverCtx, config, displayElement;
+let hoverCanvas, hoverCtx, displayElement;
 
 /**
  * Initializes hover effect on the spectrogram canvas.
  * @param {HTMLCanvasElement} mainCanvas - The main canvas.
  * @param {HTMLCanvasElement} overlayCanvas - Transparent overlay for drawing hover line.
  * @param {HTMLElement} outputElement - Element to display the frequency/note.
- * @param {object} options - Configuration (minFreq, maxFreq, scale).
  */
- function initHover(mainCanvas, overlayCanvas, outputElement, options = {}) {
+ function initHover(mainCanvas, overlayCanvas, outputElement) {
   canvas = mainCanvas;
   hoverCanvas = overlayCanvas;
   hoverCtx = hoverCanvas.getContext("2d");
   displayElement = outputElement;
-  config = Object.assign({
-    minFreq: 50,
-    maxFreq: 10000,
-    scale: 'log'
-  }, options);
 
   mainCanvas.addEventListener("mousemove", handleHover);
   mainCanvas.addEventListener("mouseleave", clearHover);

@@ -12,9 +12,19 @@ let pitchStream = [];
 let scale = 'log';
 const minFreq = 50;
 const maxFreq = 10000;
+let config = {
+  minFreq: 50,
+  maxFreq: 10000,
+  scale: 'log', // 'log' or 'linear'
+  axisWidth: 100
+};
+
 
 // Setup hover behavior
-setupHover(pitchDisplay, minFreq, maxFreq, () => scale);
+const mainCanvas = document.getElementById("spectrogram");
+const overlayCanvas = document.getElementById("hoverLine");
+initHover(mainCanvas, overlayCanvas, pitchDisplay);
+
 
 // Handle start
 startBtn.onclick = async () => {

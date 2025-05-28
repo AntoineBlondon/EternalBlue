@@ -1,10 +1,4 @@
 let x = 0;
-let config = {
-  minFreq: 50,
-  maxFreq: 10000,
-  scale: 'log', // 'log' or 'linear'
-  axisWidth: 100
-};
 
 /**
  * Initializes drawing context and settings
