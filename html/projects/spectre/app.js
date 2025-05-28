@@ -75,7 +75,7 @@ startBtn.onclick = async () => {
 
   const nyquist = audioContext.sampleRate / 2;
   const freqBinSize = nyquist / dataArray.length;
-  const maxFreq = 1000;
+  const maxFreq = 10000;
   const maxBin = Math.floor(maxFreq / freqBinSize);
 
   const height = canvas.height;
