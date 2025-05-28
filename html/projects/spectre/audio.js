@@ -1,25 +1,3 @@
-class PitchProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
-    this.pitchHistory = [];
-  }
-
-  static get parameterDescriptors() {
-    return [];
-  }
-
-  process(inputs) {
-    const input = inputs[0][0];
-    if (input) {
-      const pitch = detectPitch(input, sampleRate);
-      this.port.postMessage(pitch ?? null);
-    }
-    return true;
-  }
-}
-
-registerProcessor('pitch-processor', PitchProcessor);
-
 
 
 let audioContext;
@@ -33,33 +11,38 @@ let chunks = [];
 async function setupAudio() {
   mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
+  // Set up recording
   recorder = new MediaRecorder(mediaStream);
   chunks = [];
 
+  // Set up audio context and nodes
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  await audioContext.audioWorklet.addModule('pitch-processor.js'); // ⬅️ Load the processor file
+
   analyser = audioContext.createAnalyser();
   analyser.fftSize = 1024;
   analyser.smoothingTimeConstant = 0.8;
 
+  const bufferLength = analyser.frequencyBinCount;
   source = audioContext.createMediaStreamSource(mediaStream);
   source.connect(analyser);
 
-  await audioContext.audioWorklet.addModule('pitch-processor.js');
-
-  pitchNode = new AudioWorkletNode(audioContext, 'pitch-processor');
-  source.connect(pitchNode);
-  pitchNode.connect(audioContext.destination);
-
+  // Pitch detection with AudioWorklet
+  const pitchNode = new AudioWorkletNode(audioContext, 'pitch-processor');
   pitchHistory = [];
 
   pitchNode.port.onmessage = (event) => {
-    const pitch = event.data;
-    pitchHistory.push(pitch);
+    const input = event.data;
+    const pitch = detectPitch(input, audioContext.sampleRate);
+    pitchHistory.push(pitch ?? null);
     if (pitchHistory.length > 1024) pitchHistory.shift();
   };
 
+  source.connect(pitchNode).connect(audioContext.destination);
+
   return { recorder, audioContext };
 }
+
 
 function getAnalyser() {
   return analyser;
