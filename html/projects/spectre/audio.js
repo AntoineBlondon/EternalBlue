@@ -27,7 +27,6 @@ let analyser;
 let source;
 let pitchNode;
 let recorder;
-let mediaStream;
 let pitchHistory = [];
 let chunks = [];
 
