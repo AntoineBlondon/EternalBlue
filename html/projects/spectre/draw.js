@@ -94,3 +94,30 @@ function drawAxis() {
     ctx.stroke();
   }
 }
+
+
+let animationId;
+
+/**
+ * Starts the spectrogram drawing loop.
+ * @param {AnalyserNode} analyserNode
+ * @param {Array<number|null>} pitchHist
+ * @param {number} minFreq
+ * @param {number} maxFreq
+ * @param {'log'|'linear'} scale
+ */
+function startDrawing(analyserNode, pitchHist, minFreq, maxFreq, scale) {
+  initDrawing(canvas, analyserNode, pitchHist, {
+    minFreq,
+    maxFreq,
+    scale
+  });
+  animationId = requestAnimationFrame(drawSpectrogram);
+}
+
+/**
+ * Stops the spectrogram drawing loop.
+ */
+function stopDrawing() {
+  cancelAnimationFrame(animationId);
+}

@@ -33,7 +33,6 @@ function handleHover(event) {
 
   const freq = yToFreq(y, canvas.height, config.scale, config.minFreq, config.maxFreq);
   const note = pitchToNote(freq);
-  console.log(freq);
   displayElement.textContent = `Hover Pitch: ${freq.toFixed(1)} Hz (${note})`;
 }
 
