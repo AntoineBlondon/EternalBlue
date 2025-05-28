@@ -16,6 +16,10 @@ let mediaStream;
 let animationId;
 let x = 0;
 let recordedBlob;
+const nyquist = audioContext.sampleRate / 2;
+const freqBinSize = nyquist / bufferLength; // Hz per bin
+const maxFreq = 1000;
+const maxBin = Math.floor(maxFreq / freqBinSize);
 
 const pitchHistory = [];
 const maxHistoryLength = canvas.width;
@@ -52,7 +56,7 @@ startBtn.onclick = async () => {
   processor = audioContext.createScriptProcessor(2048, 1, 1);
   source.connect(processor);
   processor.connect(audioContext.destination);
-
+  /*
   processor.onaudioprocess = (e) => {
     const input = e.inputBuffer.getChannelData(0);
     const pitch = detectPitch(input, audioContext.sampleRate);
@@ -65,47 +69,74 @@ startBtn.onclick = async () => {
       pitchHistory.push(null);
     }
     if (pitchHistory.length > maxHistoryLength) pitchHistory.shift();
-  };
+  };*/
 
   x = 0;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   function drawSpectrogram() {
-    analyser.getByteFrequencyData(dataArray);
-    const height = canvas.height;
+  analyser.getByteFrequencyData(dataArray);
+  const height = canvas.height;
 
-    for (let i = 0; i < dataArray.length; i++) {
-      const val = dataArray[i];
-      const hue = 240 - (val * 240) / 255;
-      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-      ctx.fillRect(x, height - i, 1, 1);
-    }
+  // Define frequency mapping
+  const nyquist = audioContext.sampleRate / 2;
+  const freqBinSize = nyquist / dataArray.length;
+  const maxFreq = 1000;
+  const maxBin = Math.floor(maxFreq / freqBinSize);
 
-    // Draw pitch curve
-    ctx.beginPath();
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-    for (let i = 0; i < pitchHistory.length; i++) {
-      const pitch = pitchHistory[i];
-      if (!pitch) continue;
+  // Draw frequency bars
+  for (let i = 0; i < maxBin; i++) {
+    const val = dataArray[i];
+    const hue = 240 - (val * 240) / 255;
+    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-      const midi = 12 * Math.log2(pitch / 440) + 69;
-      const y = canvas.height - (midi * canvas.height / 128);
-      if (i === 0 || !pitchHistory[i - 1]) {
-        ctx.moveTo(i, y);
-      } else {
-        ctx.lineTo(i, y);
-      }
-    }
-    ctx.stroke();
-
-    x = (x + 1) % canvas.width;
-    if (x === 0) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    animationId = requestAnimationFrame(drawSpectrogram);
+    // Map frequency bin to canvas height
+    const y = canvas.height - (i / maxBin) * canvas.height;
+    ctx.fillRect(x, y, 1, canvas.height / maxBin);
   }
+
+  // Draw pitch curve
+  ctx.beginPath();
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 1;
+  for (let i = 0; i < pitchHistory.length; i++) {
+    const pitch = pitchHistory[i];
+    if (!pitch || pitch > 1000) continue;
+
+    const y = canvas.height - (pitch / maxFreq) * canvas.height;
+    if (i === 0 || !pitchHistory[i - 1]) {
+      ctx.moveTo(i, y);
+    } else {
+      ctx.lineTo(i, y);
+    }
+  }
+  ctx.stroke();
+
+  // Draw frequency axis (left side)
+  ctx.fillStyle = "black";
+  ctx.font = "12px sans-serif";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+
+  ctx.clearRect(0, 0, 30, canvas.height); // Clear left side for axis
+  for (let hz = 0; hz <= maxFreq; hz += 200) {
+    const y = canvas.height - (hz / maxFreq) * canvas.height;
+    ctx.fillText(`${hz} Hz`, 28, y);
+    ctx.beginPath();
+    ctx.moveTo(30, y);
+    ctx.lineTo(35, y);
+    ctx.stroke();
+  }
+
+  x = (x + 1) % canvas.width;
+  if (x === 0) {
+    ctx.clearRect(30, 0, canvas.width - 30, canvas.height);
+    x = 35; // Skip the axis margin
+  }
+
+  animationId = requestAnimationFrame(drawSpectrogram);
+}
+
 
   drawSpectrogram();
 };
