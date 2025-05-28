@@ -14,7 +14,7 @@ let config = {
  * @param {Array<number|null>} pitchHist 
  * @param {object} options 
  */
-export function initDrawing(c, a, pitchHist, options = {}) {
+function initDrawing(c, a, pitchHist, options = {}) {
   canvas = c;
   ctx = canvas.getContext('2d');
   analyser = a;
@@ -27,7 +27,7 @@ export function initDrawing(c, a, pitchHist, options = {}) {
 /**
  * Draw one frame of the spectrogram
  */
-export function drawSpectrogram() {
+function drawSpectrogram() {
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
   analyser.getByteFrequencyData(dataArray);
