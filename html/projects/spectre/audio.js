@@ -1,7 +1,31 @@
+class PitchProcessor extends AudioWorkletProcessor {
+  constructor() {
+    super();
+    this.pitchHistory = [];
+  }
+
+  static get parameterDescriptors() {
+    return [];
+  }
+
+  process(inputs) {
+    const input = inputs[0][0];
+    if (input) {
+      const pitch = detectPitch(input, sampleRate);
+      this.port.postMessage(pitch ?? null);
+    }
+    return true;
+  }
+}
+
+registerProcessor('pitch-processor', PitchProcessor);
+
+
+
 let audioContext;
 let analyser;
 let source;
-let processor;
+let pitchNode;
 let recorder;
 let mediaStream;
 let pitchHistory = [];
@@ -10,33 +34,28 @@ let chunks = [];
 async function setupAudio() {
   mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-  // Set up recording
   recorder = new MediaRecorder(mediaStream);
   chunks = [];
 
-  // Set up audio context and nodes
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
   analyser = audioContext.createAnalyser();
   analyser.fftSize = 1024;
   analyser.smoothingTimeConstant = 0.8;
 
-  const bufferLength = analyser.frequencyBinCount;
-  const inputBuffer = new Float32Array(bufferLength);
-
   source = audioContext.createMediaStreamSource(mediaStream);
   source.connect(analyser);
 
-  // Pitch detection
-  processor = audioContext.createScriptProcessor(2048, 1, 1);
-  source.connect(processor);
-  processor.connect(audioContext.destination);
+  await audioContext.audioWorklet.addModule('pitch-processor.js');
+
+  pitchNode = new AudioWorkletNode(audioContext, 'pitch-processor');
+  source.connect(pitchNode);
+  pitchNode.connect(audioContext.destination);
 
   pitchHistory = [];
 
-  processor.onaudioprocess = (e) => {
-    const input = e.inputBuffer.getChannelData(0);
-    const pitch = detectPitch(input, audioContext.sampleRate);
-    pitchHistory.push(pitch ?? null);
+  pitchNode.port.onmessage = (event) => {
+    const pitch = event.data;
+    pitchHistory.push(pitch);
     if (pitchHistory.length > 1024) pitchHistory.shift();
   };
 
@@ -55,5 +74,5 @@ function stopAudio() {
   if (recorder && recorder.state !== 'inactive') recorder.stop();
   if (audioContext && audioContext.state !== 'closed') audioContext.close();
   if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
-  if (processor) processor.disconnect();
+  if (pitchNode) pitchNode.disconnect();
 }
