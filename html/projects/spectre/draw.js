@@ -1,4 +1,5 @@
 let x = 0;
+let ctx;
 
 /**
  * Initializes drawing context and settings
@@ -32,7 +33,6 @@ function drawSpectrogram() {
 
   // Clear vertical slice at x position (excluding axis)
   ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
-    ctx.fillrect(0, 0, canvas.width / 2, canvas.height / 2);
   for (let i = 0; i < bufferLength; i++) {
     const freq = i * binSize;
     if (freq < minFreq || freq > maxFreq) continue;
