@@ -1,4 +1,3 @@
-let canvas, ctx, analyser, pitchHistory;
 let x = 0;
 let config = {
   minFreq: 50,

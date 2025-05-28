@@ -1,6 +1,3 @@
-import { setupAudio, stopAudio, getAnalyser, getPitchStream } from './audio.js';
-import { startDrawing, stopDrawing, setScale, setBounds } from './draw.js';
-import { setupHover } from './hover.js';
 
 // Buttons and UI elements
 const startBtn = document.getElementById("start");
