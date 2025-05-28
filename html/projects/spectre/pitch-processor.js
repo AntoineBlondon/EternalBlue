@@ -1,19 +1,23 @@
 class PitchProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
-    this.pitchHistory = [];
-  }
-
-  static get parameterDescriptors() {
-    return [];
+    this.buffer = new Float32Array(2048);
+    this.writeIndex = 0;
   }
 
   process(inputs) {
-    const input = inputs[0][0];
-    if (input) {
-      const pitch = detectPitch(input, sampleRate);
-      this.port.postMessage(pitch ?? null);
+    const input = inputs[0];
+    if (!input || input.length === 0 || input[0].length === 0) return true;
+
+    const inputChannel = input[0]; // Mono input
+    for (let i = 0; i < inputChannel.length; i++) {
+      this.buffer[this.writeIndex++] = inputChannel[i];
+      if (this.writeIndex >= this.buffer.length) {
+        this.port.postMessage(this.buffer.slice(0)); // send a copy
+        this.writeIndex = 0;
+      }
     }
+
     return true;
   }
 }
