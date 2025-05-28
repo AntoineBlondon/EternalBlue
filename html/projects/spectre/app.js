@@ -114,14 +114,16 @@ startBtn.onclick = async () => {
 
   // Draw frequency axis
   ctx.clearRect(0, 0, axisWidth, height);
-  ctx.fillStyle = "black";
-  ctx.font = "12px sans-serif";
+  ctx.fillStyle = "white";
+  ctx.font = "12px Azeret Mono";
   ctx.textAlign = "right";
   ctx.textBaseline = "middle";
 
   for (let hz = 0; hz <= maxFreq; hz += 200) {
-    const y = height - (hz / maxFreq) * height;
+    const y = canvas.height - (hz / maxFreq) * canvas.height;
     ctx.fillText(`${hz} Hz`, axisWidth - 4, y);
+    
+    // Optional: tick mark
     ctx.beginPath();
     ctx.moveTo(axisWidth - 2, y);
     ctx.lineTo(axisWidth, y);
