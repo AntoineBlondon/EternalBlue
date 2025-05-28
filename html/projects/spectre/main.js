@@ -4,7 +4,6 @@ const startBtn = document.getElementById("start");
 const stopBtn = document.getElementById("stop");
 const playBtn = document.getElementById("play");
 const downloadBtn = document.getElementById("download");
-const scaleSelector = document.getElementById("scale");
 const pitchDisplay = document.getElementById("pitch");
 
 let recordedBlob = null;
@@ -70,10 +69,4 @@ downloadBtn.onclick = () => {
   a.href = URL.createObjectURL(recordedBlob);
   a.download = "voice.wav";
   a.click();
-};
-
-// Handle scale switch
-scaleSelector.onchange = (e) => {
-  scale = e.target.value;
-  setScale(scale);
 };
