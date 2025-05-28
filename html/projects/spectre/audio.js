@@ -17,7 +17,7 @@ async function setupAudio() {
 
   // Set up audio context and nodes
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  await audioContext.audioWorklet.addModule('pitch-processor.js'); // ⬅️ Load the processor file
+  await audioContext.audioWorklet.addModule('spectre/pitch-processor.js'); // Load the processor file
 
   analyser = audioContext.createAnalyser();
   analyser.fftSize = 1024;
