@@ -32,6 +32,7 @@ function freqToY(freq, canvasHeight, minFreq, maxFreq, scale = 'log') {
  * @returns {number} Frequency in Hz
  */
 function yToFreq(y, canvasHeight, minFreq, maxFreq, scale = 'log') {
+    console.log(y, canvasHeight, minFreq, maxFreq, scale);
   const norm = 1 - (y / canvasHeight);
   if (scale === 'log') {
     const logMin = Math.log10(minFreq);
