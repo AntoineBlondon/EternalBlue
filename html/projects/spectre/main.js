@@ -31,15 +31,11 @@ startBtn.onclick = async () => {
   stopBtn.disabled = false;
   playBtn.disabled = true;
   downloadBtn.disabled = true;
-  let aanalyser = getAnalyser();
-
+  
   const { recorder, audioContext } = await setupAudio();
   pitchStream = getPitchStream();
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  const source = audioContext.createMediaStreamSource(stream);
-  console.log(aanalyser);
-  source.connect(aanalyser);
-
+  
+  
   recorder.ondataavailable = e => chunks.push(e.data);
   recorder.onstop = () => {
     recordedBlob = new Blob(chunks, { type: 'audio/wav' });
@@ -47,6 +43,11 @@ startBtn.onclick = async () => {
     downloadBtn.disabled = false;
   };
   recorder.start();
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const source = audioContext.createMediaStreamSource(stream);
+  let aanalyser = getAnalyser();
+  console.log(aanalyser);
+  source.connect(aanalyser);
   startDrawing(aanalyser, pitchStream, minFreq, maxFreq, scale);
 };
 
