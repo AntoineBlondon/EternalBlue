@@ -30,8 +30,6 @@ function drawSpectrogram() {
   const binSize = nyquist / bufferLength;
 
   const { minFreq, maxFreq, scale, axisWidth } = config;
-  console.log(`Drawing at x=${x}, minFreq=${minFreq}, maxFreq=${maxFreq}, scale=${scale}`);
-    console.log(dataArray);
   // Clear vertical slice at x position (excluding axis)
   ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
   for (let i = 0; i < bufferLength; i++) {
@@ -109,6 +107,7 @@ let animationId;
  */
 function startDrawing(analyserNode, pitchHist) {
   initDrawing(mainCanvas, analyserNode, pitchHist);
+  drawAxis();
   animationId = requestAnimationFrame(drawSpectrogram);
 }
 
