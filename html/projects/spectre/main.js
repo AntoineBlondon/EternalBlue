@@ -34,6 +34,9 @@ startBtn.onclick = async () => {
 
   const { recorder, audioContext } = await setupAudio();
   pitchStream = getPitchStream();
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const source = audioContext.createMediaStreamSource(stream);
+  source.connect(analyser);
 
   recorder.ondataavailable = e => chunks.push(e.data);
   recorder.onstop = () => {
@@ -42,7 +45,6 @@ startBtn.onclick = async () => {
     downloadBtn.disabled = false;
   };
   recorder.start();
-  console.log(getAnalyser())
   startDrawing(getAnalyser(), pitchStream, minFreq, maxFreq, scale);
 };
 
