@@ -9,7 +9,7 @@ let canvas;
  * @param {Array<number|null>} pitchHist 
  * @param {object} options 
  */
-function initDrawing(c, a, pitchHist, options = {}) {
+function initDrawing(c, a, pitchHist) {
   canvas = c;
   ctx = canvas.getContext('2d');
   analyser = a;
@@ -107,12 +107,8 @@ let animationId;
  * @param {number} maxFreq
  * @param {'log'|'linear'} scale
  */
-function startDrawing(analyserNode, pitchHist, minFreq, maxFreq, scale) {
-  initDrawing(canvas, analyserNode, pitchHist, {
-    minFreq,
-    maxFreq,
-    scale
-  });
+function startDrawing(analyserNode, pitchHist) {
+  initDrawing(mainCanvas, analyserNode, pitchHist);
   animationId = requestAnimationFrame(drawSpectrogram);
 }
 

@@ -45,7 +45,7 @@ startBtn.onclick = async () => {
   recorder.start();
   let aanalyser = getAnalyser();
   source.connect(aanalyser);
-  startDrawing(aanalyser, pitchStream, minFreq, maxFreq, scale);
+  startDrawing(aanalyser, pitchStream);
 };
 
 // Handle stop
