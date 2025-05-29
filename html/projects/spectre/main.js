@@ -37,6 +37,7 @@ startBtn.onclick = async () => {
   pitchStream = getPitchStream();
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   const source = audioContext.createMediaStreamSource(stream);
+  console.log(aanalyser);
   source.connect(aanalyser);
 
   recorder.ondataavailable = e => chunks.push(e.data);
