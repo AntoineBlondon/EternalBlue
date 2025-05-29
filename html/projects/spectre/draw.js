@@ -15,7 +15,6 @@ function initDrawing(c, a, pitchHist) {
   analyser = a;
   pitchHistory = pitchHist;
   x = 0;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 /**
@@ -107,7 +106,6 @@ let animationId;
  */
 function startDrawing(analyserNode, pitchHist) {
   initDrawing(mainCanvas, analyserNode, pitchHist);
-  drawAxis();
   animationId = requestAnimationFrame(drawSpectrogram);
 }
 
