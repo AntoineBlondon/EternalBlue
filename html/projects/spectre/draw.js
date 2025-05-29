@@ -13,7 +13,6 @@ function initDrawing(c, a, pitchHist, options = {}) {
   ctx = canvas.getContext('2d');
   analyser = a;
   pitchHistory = pitchHist;
-  Object.assign(config, options);
   x = 0;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
