@@ -30,7 +30,7 @@ function drawSpectrogram() {
 
   const { minFreq, maxFreq, scale, axisWidth } = config;
 
-    console.log(ctx);
+    console.log(dataArray);
   // Clear vertical slice at x position (excluding axis)
   ctx.clearRect(axisWidth + x, 0, 1, canvas.height);
   for (let i = 0; i < bufferLength; i++) {
