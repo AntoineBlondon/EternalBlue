@@ -42,6 +42,7 @@ startBtn.onclick = async () => {
     downloadBtn.disabled = false;
   };
   recorder.start();
+  console.log(getAnalyser())
   startDrawing(getAnalyser(), pitchStream, minFreq, maxFreq, scale);
 };
 
