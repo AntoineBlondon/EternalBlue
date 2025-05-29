@@ -65,7 +65,7 @@ function drawSpectrogram() {
   drawAxis();
 
   x = (x + 1) % (canvas.width - axisWidth);
-  requestAnimationFrame(drawSpectrogram);
+  animationId = requestAnimationFrame(drawSpectrogram);
 }
 
 function drawAxis() {
