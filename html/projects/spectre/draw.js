@@ -1,5 +1,6 @@
 let x = 0;
 let ctx;
+let canvas;
 
 /**
  * Initializes drawing context and settings
