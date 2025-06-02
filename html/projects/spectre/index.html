@@ -21,8 +21,14 @@
 const canvas = document.getElementById('spectrogram');
 const ctx = canvas.getContext('2d');
 
+function setCanvasSize() {
+  const canvasHeight = Math.floor(window.innerHeight * 0.35);
+  canvas.height = canvasHeight;
+  return canvasHeight;
+}
+
 const freqAxisWidth = 50;
-const canvasHeight = 256;
+let canvasHeight = setCanvasSize(); // Initial size
 const minFreq = 0;
 const maxFreq = 4000;
 canvas.height = canvasHeight;
