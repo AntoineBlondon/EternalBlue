@@ -14,21 +14,54 @@
         </div>
     </header>
     <h1>Spectre</h1>
-    <div style="position: relative; width: 800px; height: 512px;">
-        <canvas id="spectrogram" width="1000" height="512" style="position: absolute; left: 0;"></canvas>
-        <canvas id="hoverLine" width="1000" height="512" style="position: absolute; left: 0; pointer-events: none;"></canvas>
-    </div>
-    <div id="pitch"></div>
-    <div id="controls">
-        <button id="start">Start</button>
-        <button id="stop" disabled>Stop</button>
-        <button id="play" disabled>Play</button>
-        <button id="download" disabled>Download WAV</button>
-    </div>
-    <script src="spectre/utils.js"></script>
-    <script src="spectre/hover.js"></script>
-    <script src="spectre/audio.js"></script>
-    <script src="spectre/draw.js"></script>
-    <script src="spectre/main.js"></script>
+    
+  <canvas id="spectrogram"></canvas>
+
+  <script>
+    const canvas = document.getElementById('spectrogram');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = 256;
+
+    let audioContext, analyser, dataArray;
+
+    async function setupAudio() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioContext.createMediaStreamSource(stream);
+
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      const bufferLength = analyser.frequencyBinCount;
+      dataArray = new Uint8Array(bufferLength);
+
+      source.connect(analyser);
+
+      draw();
+    }
+
+    function draw() {
+      requestAnimationFrame(draw);
+
+      analyser.getByteFrequencyData(dataArray);
+
+      // Shift canvas left by 1 pixel
+      const imageData = ctx.getImageData(1, 0, canvas.width - 1, canvas.height);
+      ctx.putImageData(imageData, 0, 0);
+
+      // Draw new data as vertical line on the right
+      for (let i = 0; i < dataArray.length; i++) {
+        const value = dataArray[i];
+        const r = value;
+        const g = value;
+        const b = 255 - value;
+
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        ctx.fillRect(canvas.width - 1, canvas.height - i, 1, 1);
+      }
+    }
+
+    setupAudio();
+  </script>
 </body>
 </html>
