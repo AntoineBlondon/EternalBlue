@@ -21,8 +21,10 @@
 const canvas = document.getElementById('spectrogram');
 const ctx = canvas.getContext('2d');
 
-const freqAxisWidth = 60;
+const freqAxisWidth = 50;
 const canvasHeight = 256;
+const minFreq = 0;
+const maxFreq = 4000;
 canvas.height = canvasHeight;
 
 let audioContext, analyser, dataArray;
@@ -35,41 +37,48 @@ function erbToFreq(e) {
   return (Math.pow(10, e / 21.4) - 1) / 0.00437;
 }
 
-function getERBIndexMap(nyquist, size) {
+function getERBIndexMap(nyquist, size, minFreq = minFreq, maxFreq = maxFreq) {
   const map = new Array(size);
-  const maxERB = freqToERB(nyquist);
+  const maxERB = freqToERB(maxFreq);
+  const minERB = freqToERB(minFreq);
+
   for (let y = 0; y < size; y++) {
-    const erbRatio = 1 - y / size; // from top (high) to bottom (low)
-    const erb = erbRatio * maxERB;
+    const erbRatio = 1 - y / size;
+    const erb = erbRatio * (maxERB - minERB) + minERB;
     const freq = erbToFreq(erb);
     const bin = Math.floor(freq / nyquist * (analyser.frequencyBinCount - 1));
     map[y] = bin;
   }
+
   return map;
 }
 
-function drawAxis(nyquist) {
+
+function drawAxis(minFreq, maxFreq) {
+  const rightX = canvas.width - freqAxisWidth;
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, freqAxisWidth, canvas.height);
+  ctx.fillRect(rightX, 0, freqAxisWidth, canvas.height);
   ctx.strokeStyle = "white";
   ctx.fillStyle = "white";
   ctx.font = "10px sans-serif";
-  ctx.textAlign = "right";
+  ctx.textAlign = "left";
 
-  const maxERB = freqToERB(nyquist);
+  const minERB = freqToERB(minFreq);
+  const maxERB = freqToERB(maxFreq);
+
   const labeledFrequencies = [100, 200, 300, 400, 500, 1000, 2000, 3000];
 
   for (const freq of labeledFrequencies) {
-    if (freq > nyquist) continue; // Skip labels above Nyquist limit
+    if (freq < minFreq || freq > maxFreq) continue;
     const erb = freqToERB(freq);
-    const erbRatio = erb / maxERB;
+    const erbRatio = (erb - minERB) / (maxERB - minERB);
     const y = (1 - erbRatio) * canvas.height;
 
     ctx.beginPath();
-    ctx.moveTo(freqAxisWidth - 5, y);
-    ctx.lineTo(freqAxisWidth, y);
+    ctx.moveTo(rightX, y);
+    ctx.lineTo(rightX + 5, y);
     ctx.stroke();
-    ctx.fillText(freq + " Hz", freqAxisWidth - 7, y + 3);
+    ctx.fillText(freq + " Hz", rightX + 7, y + 3);
   }
 }
 
@@ -86,27 +95,32 @@ async function setupAudio() {
   source.connect(analyser);
 
   const nyquist = audioContext.sampleRate / 2;
-  const erbIndexMap = getERBIndexMap(nyquist, canvasHeight);
+  const erbIndexMap = getERBIndexMap(nyquist, canvasHeight, minFreq, maxFreq);
 
   function draw() {
-    requestAnimationFrame(draw);
-    analyser.getByteFrequencyData(dataArray);
+  requestAnimationFrame(draw);
+  analyser.getByteFrequencyData(dataArray);
 
-    const imageData = ctx.getImageData(freqAxisWidth + 1, 0, canvas.width - freqAxisWidth - 1, canvas.height);
-    ctx.putImageData(imageData, freqAxisWidth, 0);
+  // Shift image 1px to the left, excluding the axis area on the right
+  const scrollWidth = canvas.width - freqAxisWidth;
+  const imageData = ctx.getImageData(1, 0, scrollWidth - 1, canvas.height);
+  ctx.putImageData(imageData, 0, 0);
 
-    for (let y = 0; y < canvasHeight; y++) {
-      const i = erbIndexMap[y];
-      const value = dataArray[i] ?? 0;
-      const r = value;
-      const g = value;
-      const b = 255 - value;
-      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-      ctx.fillRect(canvas.width - 1, y, 1, 1);
-    }
-
-    drawAxis(nyquist);
+  // Draw new column at the last column before the axis
+  const x = scrollWidth - 1;
+  for (let y = 0; y < canvasHeight; y++) {
+    const i = erbIndexMap[y];
+    const value = dataArray[i] ?? 0;
+    const r = value;
+    const g = value;
+    const b = 255 - value;
+    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+    ctx.fillRect(x, y, 1, 1);
   }
+
+  drawAxis(minFreq, maxFreq);
+}
+
 
   draw();
 }
