@@ -80,7 +80,7 @@ async function setupAudio() {
   const source = audioContext.createMediaStreamSource(stream);
 
   analyser = audioContext.createAnalyser();
-  analyser.fftSize = 512;
+  analyser.fftSize = 512 * 8;
   const bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength);
   source.connect(analyser);
