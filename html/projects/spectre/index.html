@@ -15,53 +15,76 @@
     </header>
     <h1>Spectre</h1>
     
-  <canvas id="spectrogram"></canvas>
+    <canvas id="spectrogram"></canvas>
 
-  <script>
-    const canvas = document.getElementById('spectrogram');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth / 4;
-    canvas.height = 256;
+    <script>
+      const canvas = document.getElementById('spectrogram');
+      const ctx = canvas.getContext('2d');
 
-    let audioContext, analyser, dataArray;
+      const freqAxisWidth = 50; // space for labels
+      const dataHeight = 256;
+      canvas.width = window.innerWidth / 4;
+      canvas.height = dataHeight;
 
-    async function setupAudio() {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const source = audioContext.createMediaStreamSource(stream);
+      let audioContext, analyser, dataArray;
 
-      analyser = audioContext.createAnalyser();
-      analyser.fftSize = 512;
-      const bufferLength = analyser.frequencyBinCount;
-      dataArray = new Uint8Array(bufferLength);
+      async function setupAudio() {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaStreamSource(stream);
 
-      source.connect(analyser);
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 512;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
 
-      draw();
-    }
-
-    function draw() {
-      requestAnimationFrame(draw);
-
-      analyser.getByteFrequencyData(dataArray);
-
-      // Shift canvas left by 1 pixel
-      const imageData = ctx.getImageData(1, 0, canvas.width - 1, canvas.height);
-      ctx.putImageData(imageData, 0, 0);
-
-      // Draw new data as vertical line on the right
-      for (let i = 0; i < dataArray.length; i++) {
-        const value = dataArray[i];
-        const r = value;
-        const g = value;
-        const b = 255 - value;
-
-        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-        ctx.fillRect(canvas.width - 1, canvas.height - i, 1, 1);
+        source.connect(analyser);
+        draw();
       }
-    }
 
-    setupAudio();
-  </script>
+      function drawAxis() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, freqAxisWidth, canvas.height);
+        ctx.strokeStyle = "white";
+        ctx.fillStyle = "white";
+        ctx.font = "10px sans-serif";
+        ctx.textAlign = "right";
+
+        const nyquist = audioContext.sampleRate / 2;
+        const step = 32; // vertical step in pixels
+
+        for (let y = 0; y <= canvas.height; y += step) {
+          const freq = Math.round(nyquist * (1 - y / canvas.height));
+          ctx.beginPath();
+          ctx.moveTo(freqAxisWidth - 5, y);
+          ctx.lineTo(freqAxisWidth, y);
+          ctx.stroke();
+          ctx.fillText(freq + " Hz", freqAxisWidth - 7, y + 3);
+        }
+      }
+
+      function draw() {
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+
+        // Shift image left excluding axis area
+        const imageData = ctx.getImageData(freqAxisWidth + 1, 0, canvas.width - freqAxisWidth - 1, canvas.height);
+        ctx.putImageData(imageData, freqAxisWidth, 0);
+
+        // Draw the new frequency column
+        for (let i = 0; i < dataArray.length; i++) {
+          const value = dataArray[i];
+          const r = value;
+          const g = value;
+          const b = 255 - value;
+          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+          ctx.fillRect(canvas.width - 1, canvas.height - i, 1, 1);
+        }
+
+        drawAxis();
+      }
+
+      setupAudio();
+    </script>
 </body>
 </html>
