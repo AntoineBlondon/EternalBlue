@@ -36,20 +36,21 @@ function erbToFreq(e) {
   return (Math.pow(10, e / 21.4) - 1) / 0.00437;
 }
 
-function getERBIndexMap(nyquist, size) {
+function getERBIndexMap(maxDisplayHz, size, nyquist, binCount) {
   const map = new Array(size);
-  const maxERB = freqToERB(nyquist);
+  const maxERB = freqToERB(maxDisplayHz);
   for (let y = 0; y < size; y++) {
-    const erbRatio = 1 - y / size; // from top (high) to bottom (low)
+    const erbRatio = 1 - y / size;
     const erb = erbRatio * maxERB;
     const freq = erbToFreq(erb);
-    const bin = Math.floor(freq / nyquist * (analyser.frequencyBinCount - 1));
+    const bin = Math.min(Math.floor(freq / nyquist * (binCount - 1)), binCount - 1);
     map[y] = bin;
   }
   return map;
 }
 
-function drawAxis(nyquist) {
+
+function drawAxis() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, freqAxisWidth, canvas.height);
   ctx.strokeStyle = "white";
@@ -57,12 +58,14 @@ function drawAxis(nyquist) {
   ctx.font = "10px sans-serif";
   ctx.textAlign = "right";
 
-  const maxERB = freqToERB(nyquist);
-  const step = 32;
-  for (let y = 0; y <= canvas.height; y += step) {
-    const erbRatio = 1 - y / canvas.height;
-    const erb = erbRatio * maxERB;
-    const freq = Math.round(erbToFreq(erb));
+  const maxERB = freqToERB(4000);
+  const labeledFrequencies = [100, 200, 300, 400, 500, 1000, 2000, 3000];
+
+  for (const freq of labeledFrequencies) {
+    const erb = freqToERB(freq);
+    const erbRatio = erb / maxERB;
+    const y = (1 - erbRatio) * canvas.height;
+
     ctx.beginPath();
     ctx.moveTo(freqAxisWidth - 5, y);
     ctx.lineTo(freqAxisWidth, y);
@@ -70,6 +73,8 @@ function drawAxis(nyquist) {
     ctx.fillText(freq + " Hz", freqAxisWidth - 7, y + 3);
   }
 }
+
+
 
 async function setupAudio() {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -83,7 +88,7 @@ async function setupAudio() {
   source.connect(analyser);
 
   const nyquist = audioContext.sampleRate / 2;
-  const erbIndexMap = getERBIndexMap(nyquist, canvasHeight);
+  const erbIndexMap = getERBIndexMap(4000, nyquist, canvasHeight);
 
   function draw() {
     requestAnimationFrame(draw);
@@ -102,7 +107,7 @@ async function setupAudio() {
       ctx.fillRect(canvas.width - 1, y, 1, 1);
     }
 
-    drawAxis(nyquist);
+    drawAxis();
   }
 
   draw();
