@@ -18,20 +18,19 @@
 <canvas id="spectrogram" style="width: 100%;"></canvas>
 
 <script>
-const canvas = document.getElementById('spectrogram');
-const ctx = canvas.getContext('2d');
-
-function setCanvasSize() {
-  const canvasHeight = Math.floor(window.innerHeight * 0.35);
-  canvas.height = canvasHeight;
-  return canvasHeight;
-}
-
-const freqAxisWidth = 50;
-let canvasHeight = setCanvasSize(); // Initial size
+  const canvas = document.getElementById('spectrogram');
+  const ctx = canvas.getContext('2d');
+  
+  function setCanvasSize() {
+    const canvasHeight = Math.floor(window.innerHeight * 0.35);
+    canvas.height = canvasHeight;
+    return canvasHeight;
+  }
+  
+  const freqAxisWidth = 50;
+  let canvasHeight = setCanvasSize();
 const minFreq = 0;
 const maxFreq = 4000;
-canvas.height = canvasHeight;
 
 let audioContext, analyser, dataArray;
 
