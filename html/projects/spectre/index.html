@@ -15,7 +15,7 @@
 </header>
 <h1>Spectre</h1>
 
-<canvas id="spectrogram"></canvas>
+<canvas id="spectrogram" style="width: 70%;"></canvas>
 
 <script>
 const canvas = document.getElementById('spectrogram');
@@ -23,7 +23,6 @@ const ctx = canvas.getContext('2d');
 
 const freqAxisWidth = 60;
 const canvasHeight = 256;
-canvas.width = window.innerWidth / 2;
 canvas.height = canvasHeight;
 
 let audioContext, analyser, dataArray;
@@ -36,21 +35,20 @@ function erbToFreq(e) {
   return (Math.pow(10, e / 21.4) - 1) / 0.00437;
 }
 
-function getERBIndexMap(maxDisplayHz, size, nyquist, binCount) {
+function getERBIndexMap(nyquist, size) {
   const map = new Array(size);
-  const maxERB = freqToERB(maxDisplayHz);
+  const maxERB = freqToERB(nyquist);
   for (let y = 0; y < size; y++) {
-    const erbRatio = 1 - y / size;
+    const erbRatio = 1 - y / size; // from top (high) to bottom (low)
     const erb = erbRatio * maxERB;
     const freq = erbToFreq(erb);
-    const bin = Math.min(Math.floor(freq / nyquist * (binCount - 1)), binCount - 1);
+    const bin = Math.floor(freq / nyquist * (analyser.frequencyBinCount - 1));
     map[y] = bin;
   }
   return map;
 }
 
-
-function drawAxis() {
+function drawAxis(nyquist) {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, freqAxisWidth, canvas.height);
   ctx.strokeStyle = "white";
@@ -58,10 +56,11 @@ function drawAxis() {
   ctx.font = "10px sans-serif";
   ctx.textAlign = "right";
 
-  const maxERB = freqToERB(4000);
+  const maxERB = freqToERB(nyquist);
   const labeledFrequencies = [100, 200, 300, 400, 500, 1000, 2000, 3000];
 
   for (const freq of labeledFrequencies) {
+    if (freq > nyquist) continue; // Skip labels above Nyquist limit
     const erb = freqToERB(freq);
     const erbRatio = erb / maxERB;
     const y = (1 - erbRatio) * canvas.height;
@@ -73,7 +72,6 @@ function drawAxis() {
     ctx.fillText(freq + " Hz", freqAxisWidth - 7, y + 3);
   }
 }
-
 
 
 async function setupAudio() {
@@ -88,7 +86,7 @@ async function setupAudio() {
   source.connect(analyser);
 
   const nyquist = audioContext.sampleRate / 2;
-  const erbIndexMap = getERBIndexMap(4000, nyquist, canvasHeight);
+  const erbIndexMap = getERBIndexMap(nyquist, canvasHeight);
 
   function draw() {
     requestAnimationFrame(draw);
@@ -107,7 +105,7 @@ async function setupAudio() {
       ctx.fillRect(canvas.width - 1, y, 1, 1);
     }
 
-    drawAxis();
+    drawAxis(nyquist);
   }
 
   draw();
