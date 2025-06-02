@@ -22,9 +22,7 @@ const canvas = document.getElementById('spectrogram');
 const ctx = canvas.getContext('2d');
 
 const freqAxisWidth = 60;
-const canvasHeight = 256;
-const maxDisplayHz = 4000;
-
+const canvasHeight = window.innerHeight * 0.7;
 canvas.height = canvasHeight;
 
 let audioContext, analyser, dataArray;
@@ -37,9 +35,9 @@ function erbToFreq(e) {
   return (Math.pow(10, e / 21.4) - 1) / 0.00437;
 }
 
-function getERBIndexMap(displayHz, size) {
+function getERBIndexMap(nyquist, size) {
   const map = new Array(size);
-  const maxERB = freqToERB(displayHz);
+  const maxERB = freqToERB(nyquist);
   for (let y = 0; y < size; y++) {
     const erbRatio = 1 - y / size; // from top (high) to bottom (low)
     const erb = erbRatio * maxERB;
@@ -50,8 +48,7 @@ function getERBIndexMap(displayHz, size) {
   return map;
 }
 
-
-function drawAxis() {
+function drawAxis(nyquist) {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, freqAxisWidth, canvas.height);
   ctx.strokeStyle = "white";
@@ -59,11 +56,11 @@ function drawAxis() {
   ctx.font = "10px sans-serif";
   ctx.textAlign = "right";
 
-  const maxERB = freqToERB(maxDisplayHz);
+  const maxERB = freqToERB(nyquist);
   const labeledFrequencies = [100, 200, 300, 400, 500, 1000, 2000, 3000];
 
   for (const freq of labeledFrequencies) {
-    if (freq > maxDisplayHz) continue; // Skip labels above Nyquist limit
+    if (freq > nyquist) continue; // Skip labels above Nyquist limit
     const erb = freqToERB(freq);
     const erbRatio = erb / maxERB;
     const y = (1 - erbRatio) * canvas.height;
@@ -89,7 +86,7 @@ async function setupAudio() {
   source.connect(analyser);
 
   const nyquist = audioContext.sampleRate / 2;
-  const erbIndexMap = getERBIndexMap(maxDisplayHz, canvasHeight);
+  const erbIndexMap = getERBIndexMap(nyquist, canvasHeight);
 
   function draw() {
     requestAnimationFrame(draw);
