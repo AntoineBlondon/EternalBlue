@@ -62,7 +62,7 @@ for root, dirs, files in os.walk(input_folder):
         elif filename.endswith("index.md"):
             filepath = os.path.join(root, filename)
             css_path = os.path.relpath(os.path.join(css_folder, 'style.css'), root)
-            home_path = os.path.relpath(os.path.join(output_folder, '.'), root)
+            home_path = os.path.relpath(os.path.join('', '.'), root)
             with open(filepath, 'r') as f:
                 text = f.read().replace(".md)", ".html)")
                 title = text.split('\n')[0].replace('# ', '')
