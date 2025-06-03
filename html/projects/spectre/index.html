@@ -15,14 +15,15 @@
 </header>
 <h1>Spectre</h1>
 
-<canvas id="spectrogram" style="width: 100%;"></canvas>
+<canvas id="spectrogram" ></canvas>
 
 <script>
   const canvas = document.getElementById('spectrogram');
   const ctx = canvas.getContext('2d');
-  
+
   function setCanvasSize() {
-    const canvasHeight = Math.floor(window.innerHeight * 0.35);
+    canvas.width = Math.floor(window.innerWidth * 0.5);
+    const canvasHeight = Math.floor(window.innerHeight * 0.8);
     canvas.height = canvasHeight;
     return canvasHeight;
   }
