@@ -62,11 +62,12 @@ for root, dirs, files in os.walk(input_folder):
         elif filename.endswith("index.md"):
             filepath = os.path.join(root, filename)
             css_path = os.path.relpath(os.path.join(css_folder, 'style.css'), root)
+            home_path = os.path.relpath(os.path.join(output_folder, '.'), root)
             with open(filepath, 'r') as f:
                 text = f.read().replace(".md)", ".html)")
                 title = text.split('\n')[0].replace('# ', '')
                 html = markdown.markdown(text, extensions=['attr_list'])
-                html = header(title, css_path) + html + footer
+                html = header(title, css_path, home_path) + html + footer
 
             relative_path = os.path.relpath(filepath, input_folder)
             output_path = os.path.join(output_folder, relative_path.replace('.md', '.html'))
