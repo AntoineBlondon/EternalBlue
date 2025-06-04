@@ -1,7 +1,5 @@
 # son Silence, ma Voie
 
-## 
-
 Avec ellui, c'est toujours la même routine,<br>
 Je lu lève, et je lui livre mes lèvres,<br>
 Al, livide et pourtant libre, se mutine,<br>
