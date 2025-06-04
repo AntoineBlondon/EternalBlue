@@ -15,7 +15,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 A series where I post stuff for fun
 
-- [relief](postaday/17_relief)
+- [specter!](postaday/17_specter)
 - [hello again](postaday/16_hello_again)
 - [today_is_lazy](postaday/15_today_is_lazy)
 - [moments pass](postaday/14_moments_pass)
