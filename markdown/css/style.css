@@ -58,10 +58,13 @@ h1 {
 h2 {
     font-weight: bold;
     border-bottom: white 1px solid;
+    border-right: white 1px solid;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+    padding-left: .2em;
+    background-color: #302850;
 }
 @media screen and (max-width: 768px) {
     body {
