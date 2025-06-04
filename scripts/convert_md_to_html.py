@@ -22,9 +22,13 @@ def header(title, css_path, home_path):
             <a href="{home_path}/about">about</a>
         </div>
     </header>
+    <div class="content">
 """
 
 footer = """
+    </div>
+    <footer>
+    </footer>
 </body>
 </html>
 """
