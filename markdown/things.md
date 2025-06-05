@@ -2,9 +2,9 @@
 
 Where I put all the stuff I write.
 
-## A mess
+## Main things
 
-This section is a mess for now, but I will (probably) clean it up later
+some things I write
 
 - [Egg](things/egg)
 - [The Art of Limitations](things/the_art_of_limitations)
@@ -13,7 +13,7 @@ This section is a mess for now, but I will (probably) clean it up later
 
 ## Postaday
 
-A series where I post stuff for fun
+a series where I post small stuff for fun
 
 - [spectre!](postaday/17_spectre)
 - [hello again](postaday/16_hello_again)
@@ -32,6 +32,11 @@ A series where I post stuff for fun
 - [Starting out](postaday/03_starting)
 - [Stress (and how to handle it)](postaday/02_how_to_handle_stress)
 - [Debut](postaday/01_debut)
+
+## Posters
+
+I will publish my posters here when I will have made them (hopefully not in a long time!)
+in the meantime, here is [a collections of cool ones I didn't make](things/posters)
 
 ## Poems
 

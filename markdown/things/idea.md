@@ -47,3 +47,6 @@ AI, a fun tool that will end us all
 
 # how are you?
 
+# thinging
+
+# birds
