@@ -2,7 +2,7 @@
 
 Where I put all the stuff I write.
 
-## Main things
+## main things
 
 some things I write
 
@@ -11,9 +11,9 @@ some things I write
 - [I love doing bad things](things/bad_things)
 - [Starting](things/starting)
 
-## Postaday
+## small things
 
-a series where I post small stuff for fun
+a series where I post small things for fun
 
 - [spectre!](postaday/17_spectre)
 - [hello again](postaday/16_hello_again)
@@ -36,6 +36,7 @@ a series where I post small stuff for fun
 ## Posters
 
 I will publish my posters here when I will have made them (hopefully not in a long time!)
+
 in the meantime, here is [a collections of cool ones I didn't make](things/posters)
 
 ## Poems
