@@ -1,8 +1,8 @@
-# specter!
+# spectre!
 
 ah ha !
 
-I made a (very simple but quite nice) spectrogram that I put [here](../projects/specter)
+I made a (very simple but quite nice) spectrogram that I put [here](../projects/spectre)
 
 <br>
 
