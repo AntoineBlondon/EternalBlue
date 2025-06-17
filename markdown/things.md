@@ -16,6 +16,7 @@ some things I write
 
 fragments from a world like ours, where the sky hums and magic lives quietly.
 
+- [in-between the pages](shivering_skies/in_between_the_pages)
 - [by the lake](shivering_skies/by_the_lake)
 
 
