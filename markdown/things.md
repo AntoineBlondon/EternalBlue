@@ -11,6 +11,14 @@ some things I write
 - [I love doing bad things](things/bad_things)
 - [Starting](things/starting)
 
+
+## Under Shivering Skies
+
+fragments from a world like ours, where the sky hums and magic lives quietly.
+
+- [by the lake](shivering_skies/by_the_lake)
+
+
 ## small things
 
 a series where I post small things for fun
@@ -33,11 +41,13 @@ a series where I post small things for fun
 - [Stress (and how to handle it)](postaday/02_how_to_handle_stress)
 - [Debut](postaday/01_debut)
 
+
 ## Posters
 
 I will publish my posters here when I will have made them (hopefully not in a long time!)
 
 in the meantime, here is [a collections of cool ones I didn't make](things/posters)
+
 
 ## Poems
 
