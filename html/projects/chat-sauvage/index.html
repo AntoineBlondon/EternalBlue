@@ -5,8 +5,66 @@
   <title>Chat Sauvage</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    .status {
+    justify-content: space-between;
+    display: flex;
+}
+
+
+
+#roomsList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em;
+    background-color: #392F5A;
+}
+
+.room-item {
+    width: 100%;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    background-color: #5FA8D3;
+    color: #392F5A;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-item {
+    width: 10%;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    background-color: #392F5A;
+    color: white;
+    border: 2px solid #5FA8D3;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.current-user {
+    background-color: #5FA8D3;
+    color: #392F5A;
+    font-weight: bold;
+}
+
+#messagesList {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    background-color: #392F4A;
+    border: 1px solid #5FA8D3;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+  </style>
   <link rel="stylesheet" href="../../css/style.css">
-  <link rel="stylesheet" href="./chat-sauvage/chat-sauvage.css" />
 
 </head>
 <body>
