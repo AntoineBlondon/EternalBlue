@@ -96,7 +96,7 @@ function createRoom() {
     .then(res => res.json())
     .then(data => {
     alert('Room created: ' + data.room_code);
-    setSettingsTo(data.room_code, {public: false});
+    setSettingsTo(data.room_code, {"public": false});
     joinRoom(data.room_code);
     listRooms();
     });
