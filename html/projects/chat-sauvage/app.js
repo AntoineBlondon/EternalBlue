@@ -324,7 +324,7 @@ function setSettingsTo(room, settings) {
 function setSettings() {
     const publicCheckbox = document.getElementById('settings').querySelector('input[type="checkbox"]');
     const settings = {
-        public: publicCheckbox.checked
+        "public": publicCheckbox.checked
     };
     
     setSettingsTo(currentRoom, settings);
