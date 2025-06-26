@@ -73,7 +73,7 @@ function showRoomScreen() {
   </div>
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
-    document.getElementById('submit-buttonn').onclick = setSettings
+    document.getElementById('submit-button').onclick = setSettings;
     startCheckingMessages();
     setTimeout(() => {
         if (!map) {
@@ -322,7 +322,7 @@ function setSettingsTo(room, settings) {
 }
 
 function setSettings() {
-    const publicCheckbox = document.querySelector('checkbox');
+    const publicCheckbox = document.getElementById('settings').querySelector('input[type="checkbox"]');
     const settings = {
         public: publicCheckbox.checked
     };
