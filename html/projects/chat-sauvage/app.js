@@ -60,9 +60,12 @@ function showRoomScreen() {
     <input id="messageInput" placeholder="Type your message here" />
     <button onclick="sendMessage()">Send</button>
     
+    <div id="settings">
     <h3>Settings</h3>
-    <button onclick="getSettings()">Get Settings</button>
-    <div id="settingsOutput"></div>
+    <button onclick="getSettings()">Refresh</button>
+    <checkbox>Public</checkbox>
+    <button id="submit-button">Submit</button>
+    </div>
 
     <h3>Leave Room</h3>
     <button onclick="leaveRoom()">Leave</button>
@@ -70,6 +73,7 @@ function showRoomScreen() {
   </div>
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
+    document.getElementById('submit-buttonn').onclick = setSettings
     startCheckingMessages();
     setTimeout(() => {
         if (!map) {
@@ -79,6 +83,7 @@ function showRoomScreen() {
             }).addTo(map);
         }
     }, 0);
+
 }
 
 
@@ -91,6 +96,7 @@ function createRoom() {
     .then(res => res.json())
     .then(data => {
     alert('Room created: ' + data.room_code);
+    setSettingsTo(data.room_code, {public: false});
     joinRoom(data.room_code);
     listRooms();
     });
@@ -135,11 +141,13 @@ function listRooms() {
     const list = document.getElementById('roomsList');
     list.innerHTML = '';
     data.rooms.forEach(room => {
-        const li = document.createElement('li');
-        li.innerText = room;
-        li.className = 'room-item';
-        li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
-        list.appendChild(li);
+        if (getSettings(room).public) {
+            const li = document.createElement('li');
+            li.innerText = room;
+            li.className = 'room-item';
+            li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
+            list.appendChild(li);
+        }
     });
     });
 }
@@ -294,8 +302,8 @@ function getLocations() {
 
 
 
-function setSettings(settings) {
-    fetch(`${API}/room/${currentRoom}/settings`, {
+function setSettingsTo(room, settings) {
+    fetch(`${API}/room/${room}/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -313,8 +321,18 @@ function setSettings(settings) {
     });
 }
 
-function getSettings() {
-    fetch(`${API}/room/${currentRoom}/settings`, {
+function setSettings() {
+    const publicCheckbox = document.querySelector('checkbox');
+    const settings = {
+        public: publicCheckbox.checked
+    };
+    
+    setSettingsTo(currentRoom, settings);
+    console.log("Settings submitted: ", settings);
+}
+
+function getSettings(room) {
+    fetch(`${API}/room/${room}/settings`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
