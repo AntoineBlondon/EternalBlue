@@ -141,7 +141,7 @@ function listRooms() {
     const list = document.getElementById('roomsList');
     list.innerHTML = '';
     data.rooms.forEach(room => {
-        if (getSettings(room).public) {
+        if (true) {
             const li = document.createElement('li');
             li.innerText = room;
             li.className = 'room-item';
