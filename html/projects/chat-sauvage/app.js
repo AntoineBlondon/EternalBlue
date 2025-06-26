@@ -5,6 +5,7 @@ let intervalId = null;
 let mapMarkers = [];
 let map = null;
 let ZOOM_LEVEL = 17;
+let visible_users = [];
 
 showLobbyScreen();
 
@@ -198,10 +199,25 @@ function getMessages() {
     data.users.forEach(user => {
         const userDiv = document.createElement('div');
         userDiv.innerText = user;
+        userDiv.onclick = () => {
+            // toggle user-invisible class
+            userDiv.classList.toggle('user-invisible');
+            if (userDiv.classList.contains('user-invisible')) {
+                userDiv.innerText = `${user} (invisible)`;
+            }
+            else {
+                userDiv.innerText = user;
+            }
+            if (visible_users.includes(user)) {
+                visible_users = visible_users.filter(u => u !== user);
+            } else {
+                visible_users.push(user);
+            }
+        }
         userDiv.classList.add('user-item');
         if (user == currentUser) {
             userDiv.classList.add('current-user');
-            }
+        }
         document.getElementById('userList').appendChild(userDiv);
     });
     });
@@ -258,7 +274,10 @@ function getLocations() {
         data.location.forEach(loc => {
             const { username, content } = loc;
             const { latitude, longitude } = content.location;
-
+            
+            if (!username in visible_users && username !== currentUser) {
+                return;
+            }
             // Create marker
             const marker = L.marker([latitude, longitude])
                 .addTo(map)
