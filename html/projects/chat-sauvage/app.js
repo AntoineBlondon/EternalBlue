@@ -63,7 +63,7 @@ function showRoomScreen() {
     <div id="settings">
     <h3>Settings</h3>
     <button onclick="getSettings()">Refresh</button>
-    <checkbox>Public</checkbox>
+    <input type="checkbox">Public</input>
     <button id="submit-button">Submit</button>
     </div>
 
