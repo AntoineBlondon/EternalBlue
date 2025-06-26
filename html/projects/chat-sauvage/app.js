@@ -198,16 +198,17 @@ function getMessages() {
     document.getElementById('userList').innerHTML = '';
     data.users.forEach(user => {
         const userDiv = document.createElement('div');
-        userDiv.innerText = user;
+        if (!user in visible_users && user !== currentUser) {
+            userDiv.classList.add('user-invisible');
+            userDiv.innerText = `${user} (invis)`;
+           
+        } else {
+            userDiv.innerText = user;
+        }
         userDiv.onclick = () => {
             // toggle user-invisible class
             userDiv.classList.toggle('user-invisible');
-            if (userDiv.classList.contains('user-invisible')) {
-                userDiv.innerText = `${user} (invisible)`;
-            }
-            else {
-                userDiv.innerText = user;
-            }
+            
             if (visible_users.includes(user)) {
                 visible_users = visible_users.filter(u => u !== user);
             } else {
