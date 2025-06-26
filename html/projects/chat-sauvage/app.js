@@ -273,7 +273,7 @@ function getLocations() {
             const { username, content } = loc;
             const { latitude, longitude } = content.location;
             
-            if (!visible_users.contains(username)) {
+            if (!visible_users.includes(username)) {
                 return;
             }
             // Create marker
