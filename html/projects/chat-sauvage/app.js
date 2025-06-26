@@ -198,7 +198,7 @@ function getMessages() {
     document.getElementById('userList').innerHTML = '';
     data.users.forEach(user => {
         const userDiv = document.createElement('div');
-        if (!user in visible_users && user !== currentUser) {
+        if (!user in visible_users) {
             userDiv.classList.add('user-invisible');
             userDiv.innerText = `${user} (invis)`;
            
