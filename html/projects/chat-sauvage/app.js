@@ -12,6 +12,23 @@ showLobbyScreen();
 
 
 
+window.onload = () => {
+    const savedRoom = localStorage.getItem('room');
+    const savedUser = localStorage.getItem('username');
+
+    if (savedRoom && savedUser) {
+        currentRoom = savedRoom;
+        currentUser = savedUser;
+        showRoomScreen();
+    } else {
+        showLobbyScreen();
+        listRooms();
+    }
+};
+
+
+
+
 function showLobbyScreen() {
     document.getElementById('content').innerHTML = `
     <div id="lobbyScreen">
@@ -64,6 +81,7 @@ function showRoomScreen() {
     <h3>Settings</h3>
     <button onclick="getSettings()">Refresh</button>
     <input type="checkbox">Public</input>
+    <input type="number" placeholder="Timelapse (seconds)" value="120" />
     <button id="submit-button">Submit</button>
     </div>
 
@@ -96,7 +114,7 @@ function createRoom() {
     .then(res => res.json())
     .then(data => {
     alert('Room created: ' + data.room_code);
-    setSettingsTo(data.room_code, {"public": false});
+    setSettingsTo(data.room_code, {"public": false, "timelapse": 60 * 2});
     joinRoom(data.room_code);
     listRooms();
     });
@@ -147,6 +165,8 @@ function listRooms() {
             li.className = 'room-item';
             li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
             list.appendChild(li);
+            console.log("Room: " + room);
+            console.log("Room settings: " + JSON.stringify(getSettings(room)));
         }
     });
     });
@@ -323,8 +343,10 @@ function setSettingsTo(room, settings) {
 
 function setSettings() {
     const publicCheckbox = document.getElementById('settings').querySelector('input[type="checkbox"]');
+    const timelapseInput = document.getElementById('settings').querySelector('input[type="number"]');
     const settings = {
-        "public": publicCheckbox.checked
+        "public": publicCheckbox.checked,
+        "timelapse": timelapseInput ? parseInt(timelapseInput.value) : 60 * 2
     };
     
     setSettingsTo(currentRoom, settings);
@@ -366,17 +388,3 @@ function leaveRoom() {
     });
 }
 
-
-window.onload = () => {
-    const savedRoom = localStorage.getItem('room');
-    const savedUser = localStorage.getItem('username');
-
-    if (savedRoom && savedUser) {
-        currentRoom = savedRoom;
-        currentUser = savedUser;
-        showRoomScreen();
-    } else {
-        showLobbyScreen();
-        listRooms();
-    }
-};
