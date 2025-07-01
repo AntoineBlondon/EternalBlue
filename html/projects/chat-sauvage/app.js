@@ -89,9 +89,9 @@ function showRoomScreen() {
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
     
-    getSettings(currentRoom);
+    getSettings(currentRoom, true);
     document.getElementById('refresh-settings').onclick = () => {
-        getSettings(currentRoom);
+        getSettings(currentRoom, true);
     };
     startCheckingMessages();
     setTimeout(() => {
@@ -174,7 +174,7 @@ function listRooms() {
     list.innerHTML = '';
     data.rooms.forEach(room => {
         console.log("Room: ", room);
-        if (getSettings(room).public) {
+        if (getSettings(room, false).public) {
             const li = document.createElement('li');
             li.innerText = room;
             li.className = 'room-item';
@@ -367,27 +367,29 @@ function setSettings() {
     console.log("Settings submitted: ", settings);
 }
 
-function getSettings(room) {
-    if (host) {
-        document.getElementById('settings').innerHTML = `
-        <h3>Settings</h3>
-    <button id="refresh-settings">Refresh</button>
-    <p>Public Room</p>
-    <input type="checkbox"/>
-    <p>Timelapse (in seconds)</p>
-    <input type="number" placeholder="Timelapse (seconds)" value="120" />
-    <button id="submit-button">Submit</button>
-        `;
-        document.getElementById('submit-button').onclick = setSettings;
-       
-    } else {
-        document.getElementById('settings').innerHTML = `
-        <h3>Settings</h3>
+function getSettings(room, update_ui = true) {
+    if (update_ui) {
+        if (host) {
+            document.getElementById('settings').innerHTML = `
+            <h3>Settings</h3>
         <button id="refresh-settings">Refresh</button>
-        <p id='public-setting'></p>
-        <p id='timelapse-setting'></p> 
-        `;
+        <p>Public Room</p>
+        <input type="checkbox"/>
+        <p>Timelapse (in seconds)</p>
+        <input type="number" placeholder="Timelapse (seconds)" value="120" />
+        <button id="submit-button">Submit</button>
+            `;
+            document.getElementById('submit-button').onclick = setSettings;
+        
+        } else {
+            document.getElementById('settings').innerHTML = `
+            <h3>Settings</h3>
+            <button id="refresh-settings">Refresh</button>
+            <p id='public-setting'></p>
+            <p id='timelapse-setting'></p> 
+            `;
 
+        }
     }
     fetch(`${API}/room-settings/${room}`, {
         method: 'GET',
@@ -398,16 +400,17 @@ function getSettings(room) {
         if (data) {
             console.log("Current settings: ", data);
             const settingsDiv = document.getElementById('settings');
-            
-            if (host) {
-                settingsDiv.querySelector('input[type="checkbox"]').checked = data.public;
-                const timelapseInput = settingsDiv.querySelector('input[type="number"]');
-                if (timelapseInput) {
-                    timelapseInput.value = data.timelapse || 120; // Default to 120 seconds if not set
-                }   
-            } else {
-                document.getElementById('public-setting').innerText = `Public: ${data.public ? 'Yes' : 'No'}`;
-                document.getElementById('timelapse-setting').innerText = `Timelapse: ${data.timelapse || 120} seconds`;
+            if (update_ui) {
+                if (host) {
+                    settingsDiv.querySelector('input[type="checkbox"]').checked = data.public;
+                    const timelapseInput = settingsDiv.querySelector('input[type="number"]');
+                    if (timelapseInput) {
+                        timelapseInput.value = data.timelapse || 120;
+                    }   
+                } else {
+                    document.getElementById('public-setting').innerText = `Public: ${data.public ? 'Yes' : 'No'}`;
+                    document.getElementById('timelapse-setting').innerText = `Timelapse: ${data.timelapse || 120} seconds`;
+                }
             }
             return data;
         } else {
