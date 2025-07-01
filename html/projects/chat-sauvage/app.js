@@ -130,6 +130,7 @@ function isHost() {
     })
     .then(res => res.json())
     .then(data => {
+        console.log("Users in room: ", data.users);
         return data.users[currentUser] === 'host';
 
     });
