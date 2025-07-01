@@ -135,8 +135,8 @@ function createRoom() {
 }
 
 function joinRoom(...roomcode) {
-    const room = roomcode ? roomcode[0] : document.getElementById('joinRoomCode').value;
-    console.log("Joining room: ", room);
+    const room = roomcode.length > 0 ? roomcode[0] : document.getElementById('joinRoomCode').value;
+    console.log("Joining room: ", roomcode);
     const username = document.getElementById('joinUsername').value;
     if (!room) {
         alert("Enter room code");
