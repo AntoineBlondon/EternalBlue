@@ -124,15 +124,13 @@ function showRoomScreen() {
 
 
 function isHost() {
-    fetch(`${API}/room/${currentRoom}`, {
+    fetch(`${API}/room-users/${currentRoom}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
     .then(data => {
-        console.log("Room data: ", data);
-    
-    return data.users[currentUser].role === 'host';
+        return data.users[currentUser] === 'host';
 
     });
 }
