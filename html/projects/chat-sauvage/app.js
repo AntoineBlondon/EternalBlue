@@ -68,7 +68,8 @@ function showRoomScreen() {
     
     
     <div>
-    <button id="sendLocationButton" onclick="locationFunction()">Start sending Location</button>
+    <button id="sendLocationButton" onclick="startSendingLocations()">Start sending Location</button>
+    <button onclick="getLocations()">Refresh Locations</button>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
     </div>
     
