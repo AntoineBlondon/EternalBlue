@@ -89,6 +89,7 @@ function showRoomScreen() {
     document.getElementById('currentRoomCode').innerText = currentRoom;
 
     if (isHost()) {
+        console.log("hi");
         document.getElementById('settings').innerHTML = `
         <h3>Settings</h3>
     <button id="refresh-settings">Refresh</button>
@@ -131,9 +132,6 @@ function isHost() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log("Users in room: ", data.users);
-        console.log("Current user: ", currentUser);
-        console.log("Is host: ", data.users[currentUser] === 'host');
         return data.users[currentUser] === 'host';
 
     });
