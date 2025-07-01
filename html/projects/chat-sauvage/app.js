@@ -140,7 +140,9 @@ function createRoom() {
     fetch(`${API}/create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: '{}'
+    body: JSON.stringify({
+        'username': currentUser
+        })
     })
     .then(res => res.json())
     .then(data => {
