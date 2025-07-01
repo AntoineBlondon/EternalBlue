@@ -79,7 +79,7 @@ function showRoomScreen() {
     
     <div id="settings">
     <h3>Settings</h3>
-    <button onclick="getSettings()">Refresh</button>
+    <button id="refresh-settings">Refresh</button>
     <input type="checkbox">Public</input>
     <input type="number" placeholder="Timelapse (seconds)" value="120" />
     <button id="submit-button">Submit</button>
@@ -92,6 +92,9 @@ function showRoomScreen() {
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
     document.getElementById('submit-button').onclick = setSettings;
+    document.getElementById('refresh-settings').onclick = () => {
+        getSettings(currentRoom);
+    };
     startCheckingMessages();
     setTimeout(() => {
         if (!map) {
@@ -159,6 +162,7 @@ function listRooms() {
     const list = document.getElementById('roomsList');
     list.innerHTML = '';
     data.rooms.forEach(room => {
+        console.log("Room: ", room);
         if (getSettings(room).public) {
             const li = document.createElement('li');
             li.innerText = room;
