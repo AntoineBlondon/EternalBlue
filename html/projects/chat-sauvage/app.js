@@ -87,9 +87,8 @@ function showRoomScreen() {
   </div>
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
-    console.log(isHost());
+    isHost();
     if (host) {
-        console.log("hi");
         document.getElementById('settings').innerHTML = `
         <h3>Settings</h3>
     <button id="refresh-settings">Refresh</button>
