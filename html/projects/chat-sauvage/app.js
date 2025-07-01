@@ -2,6 +2,8 @@ const API = "https://lechatsauvage.pythonanywhere.com";
 let currentRoom = null;
 let currentUser = localStorage.getItem('username') || null;
 let intervalId = null;
+let intervalIdCheckLocations = null;
+let intervalIdSendLocations = null;
 let mapMarkers = [];
 let map = null;
 let ZOOM_LEVEL = 17;
@@ -66,8 +68,7 @@ function showRoomScreen() {
     
     
     <div>
-    <button onclick="locationFunction()">Send Location</button>
-    <button onclick="getLocations()">Get Locations</button>
+    <button id="sendLocationButton" onclick="locationFunction()">Start sending Location</button>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
     </div>
     
@@ -95,6 +96,7 @@ function showRoomScreen() {
         getSettings(currentRoom, true);
     };
     startCheckingMessages();
+    startCheckingLocations();
     setTimeout(() => {
         if (!map) {
             map = L.map('map').setView([0, 0], ZOOM_LEVEL);
@@ -198,6 +200,24 @@ function startCheckingMessages() {
     }, 2000);
 }
 
+function startCheckingLocations() {
+    getLocations();
+    if (intervalIdCheckLocations) return; 
+    intervalIdCheckLocations = setInterval(() => {
+        getLocations();
+    }, 30000);
+}
+
+function startSendingLocations() {
+    if (intervalIdSendLocations) return;
+    intervalIdSendLocations = setInterval(() => {
+        locationFunction();
+    }, 30000);
+    locationFunction();
+    document.getElementById('sendLocationButton').innerText = 'Stop Sending Location';
+    document.getElementById('sendLocationButton').onclick = stopSendingLocations;
+}
+
 function stopCheckingMessages() {
     if (intervalId) {
         clearInterval(intervalId);
@@ -205,6 +225,20 @@ function stopCheckingMessages() {
     }
 }
 
+function stopCheckingLocations() {
+    if (intervalIdCheckLocations) {
+        clearInterval(intervalIdCheckLocations);
+        intervalIdCheckLocations = null;
+    }
+}
+function stopSendingLocations() {
+    if (intervalIdSendLocations) {
+        clearInterval(intervalIdSendLocations);
+        intervalIdSendLocations = null;
+    }
+    document.getElementById('sendLocationButton').innerText = 'Start Sending Location';
+    document.getElementById('sendLocationButton').onclick = startSendingLocations;
+}
 
 function sendMessage() {
     const message = document.getElementById('messageInput').value;
