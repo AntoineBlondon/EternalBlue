@@ -97,18 +97,19 @@ function showRoomScreen() {
     <button id="submit-button">Submit</button>
         `;
         document.getElementById('submit-button').onclick = setSettings;
-        document.getElementById('refresh-settings').onclick = () => {
-            getSettings(currentRoom);
-        };
+       
     } else {
         document.getElementById('settings').innerHTML = `
         <h3>Settings</h3>
+        <button id="refresh-settings">Refresh</button>
         <p id='public-setting'></p>
         <p id='timelapse-setting'></p> 
         `;
 
     }
-    
+    document.getElementById('refresh-settings').onclick = () => {
+        getSettings(currentRoom);
+    };
     getSettings(currentRoom);
     startCheckingMessages();
     setTimeout(() => {
@@ -131,6 +132,8 @@ function isHost() {
     .then(res => res.json())
     .then(data => {
         console.log("Users in room: ", data.users);
+        console.log("Current user: ", currentUser);
+        console.log("Is host: ", data.users[currentUser] === 'host');
         return data.users[currentUser] === 'host';
 
     });
