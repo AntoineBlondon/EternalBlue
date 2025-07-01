@@ -346,6 +346,7 @@ function setSettingsTo(room, settings) {
     })
     .then(res => res.json())
     .then(data => {
+        console.log("Settings response: ", data);
         if (data.success) {
             console.log("Settings updated successfully");
         } else {
