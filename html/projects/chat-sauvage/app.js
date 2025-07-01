@@ -87,7 +87,7 @@ function showRoomScreen() {
   </div>
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
-
+    console.log(isHost());
     if (isHost()) {
         console.log("hi");
         document.getElementById('settings').innerHTML = `
@@ -133,7 +133,6 @@ function isHost() {
     .then(res => res.json())
     .then(data => {
         return data.users[currentUser] === 'host';
-
     });
 }
 
