@@ -159,14 +159,12 @@ function listRooms() {
     const list = document.getElementById('roomsList');
     list.innerHTML = '';
     data.rooms.forEach(room => {
-        if (true) {
+        if (getSettings(room).public) {
             const li = document.createElement('li');
             li.innerText = room;
             li.className = 'room-item';
             li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
             list.appendChild(li);
-            console.log("Room: " + room);
-            console.log("Room settings: " + JSON.stringify(getSettings(room)));
         }
     });
     });
@@ -362,6 +360,12 @@ function getSettings(room) {
     .then(data => {
         if (data) {
             console.log("Current settings: ", data);
+            const settingsDiv = document.getElementById('settings');
+            settingsDiv.querySelector('input[type="checkbox"]').checked = data.public;
+            const timelapseInput = settingsDiv.querySelector('input[type="number"]');
+            if (timelapseInput) {
+                timelapseInput.value = data.timelapse || 120; // Default to 120 seconds if not set
+            }   
             return data;
         } else {
             console.log("Error fetching settings: " + data.error);
