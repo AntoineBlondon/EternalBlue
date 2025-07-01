@@ -351,6 +351,9 @@ function setSettingsTo(room, settings) {
         } else {
             console.log("Error updating settings: " + data.error);
         }
+    })
+    .catch(error => {
+        console.error("Error setting room settings: ", error);
     });
 }
 
