@@ -175,16 +175,16 @@ function listRooms() {
     list.innerHTML = '';
     data.rooms.forEach(room => {
         console.log("Room: ", room);
-        let roomSettings = getSettings(room, false);
+        getSettings(room, false);
         setTimeout(() => {
-        if (roomSettings.public) {
+        if (settings.public) {
             const li = document.createElement('li');
             li.innerText = room;
             li.className = 'room-item';
             li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
             list.appendChild(li);
         }
-    }, 0);
+    }, 100);
     });
     });
 }
