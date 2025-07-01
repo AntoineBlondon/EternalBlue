@@ -371,7 +371,9 @@ function getSettings(room) {
         document.getElementById('settings').innerHTML = `
         <h3>Settings</h3>
     <button id="refresh-settings">Refresh</button>
-    <input type="checkbox">Public</input>
+    <p>Public Room</p>
+    <input type="checkbox"/>
+    <p>Timelapse (in seconds)</p>
     <input type="number" placeholder="Timelapse (seconds)" value="120" />
     <button id="submit-button">Submit</button>
         `;
