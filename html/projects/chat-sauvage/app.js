@@ -325,7 +325,7 @@ function getLocations() {
 
 
 function setSettingsTo(room, settings) {
-    fetch(`${API}/room/${room}/settings`, {
+    fetch(`${API}/room-settings/${room}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -356,7 +356,7 @@ function setSettings() {
 }
 
 function getSettings(room) {
-    fetch(`${API}/room/${room}/settings`, {
+    fetch(`${API}/room-settings/${room}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
