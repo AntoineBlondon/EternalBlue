@@ -7,6 +7,7 @@ let map = null;
 let ZOOM_LEVEL = 17;
 let visible_users = [];
 let host = false;
+let settings = {};
 showLobbyScreen();
 
 
@@ -136,7 +137,6 @@ function createRoom() {
 
 function joinRoom(...roomcode) {
     const room = roomcode.length > 0 ? roomcode[0] : document.getElementById('joinRoomCode').value;
-    console.log("Joining room: ", roomcode);
     const username = document.getElementById('joinUsername').value;
     if (!room) {
         alert("Enter room code");
@@ -175,13 +175,16 @@ function listRooms() {
     list.innerHTML = '';
     data.rooms.forEach(room => {
         console.log("Room: ", room);
-        if (getSettings(room, false).public) {
+        let roomSettings = getSettings(room, false);
+        setTimeout(() => {
+        if (roomSettings.public) {
             const li = document.createElement('li');
             li.innerText = room;
             li.className = 'room-item';
             li.innerHTML += ` <button onclick="joinRoom('${room}')">Join</button>`;
             list.appendChild(li);
         }
+    }, 0);
     });
     });
 }
@@ -413,6 +416,7 @@ function getSettings(room, update_ui = true) {
                     document.getElementById('timelapse-setting').innerText = `Timelapse: ${data.timelapse || 120} seconds`;
                 }
             }
+            settings = data;
             return data;
         } else {
             console.log("Error fetching settings: " + data.error);
