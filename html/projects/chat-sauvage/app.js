@@ -6,7 +6,7 @@ let mapMarkers = [];
 let map = null;
 let ZOOM_LEVEL = 17;
 let visible_users = [];
-
+let host = false;
 showLobbyScreen();
 
 
@@ -88,7 +88,7 @@ function showRoomScreen() {
     `;
     document.getElementById('currentRoomCode').innerText = currentRoom;
     console.log(isHost());
-    if (isHost()) {
+    if (host) {
         console.log("hi");
         document.getElementById('settings').innerHTML = `
         <h3>Settings</h3>
@@ -132,7 +132,7 @@ function isHost() {
     })
     .then(res => res.json())
     .then(data => {
-        return data.users[currentUser] === 'host';
+        host = (data.users[currentUser] === 'host');
     });
 }
 
@@ -395,7 +395,7 @@ function getSettings(room) {
         if (data) {
             console.log("Current settings: ", data);
             const settingsDiv = document.getElementById('settings');
-            if (isHost()) {
+            if (host) {
             settingsDiv.querySelector('input[type="checkbox"]').checked = data.public;
             const timelapseInput = settingsDiv.querySelector('input[type="number"]');
             if (timelapseInput) {
