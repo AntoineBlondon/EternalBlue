@@ -435,28 +435,29 @@ function setSettings() {
 
 function getSettings(room, update_ui = true) {
     if (update_ui) {
+        const settingsContainer = document.getElementById('settings');
+
         if (host) {
-            document.getElementById('settings').innerHTML = `
-            <h3>Settings</h3>
-        <button id="refresh-settings">Refresh</button>
-        <p>Public Room</p>
-        <input type="checkbox"/>
-        <p>Timelapse (in seconds)</p>
-        <input type="number" placeholder="Timelapse (seconds)" value="120" />
-        <button id="submit-button">Submit</button>
+            settingsContainer.innerHTML = `
+                <h3>Settings</h3>
+                <button id="refresh-settings">Refresh</button>
+                <p>Public Room</p>
+                <input type="checkbox" id="public-checkbox" />
+                <p>Timelapse (in seconds)</p>
+                <input type="number" id="timelapse-input" placeholder="Timelapse (seconds)" value="120" />
+                <button id="submit-button">Submit</button>
             `;
             document.getElementById('submit-button').onclick = setSettings;
-        
         } else {
-            document.getElementById('settings').innerHTML = `
-            <h3>Settings</h3>
-            <button id="refresh-settings">Refresh</button>
-            <p id='public-setting'></p>
-            <p id='timelapse-setting'></p> 
+            settingsContainer.innerHTML = `
+                <h3>Settings</h3>
+                <button id="refresh-settings">Refresh</button>
+                <p id='public-setting'></p>
+                <p id='timelapse-setting'></p>
             `;
-
         }
     }
+
     fetch(`${API}/room-settings/${room}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -466,25 +467,29 @@ function getSettings(room, update_ui = true) {
         if (data) {
             console.log("Current settings: ", data);
             const settingsDiv = document.getElementById('settings');
-            if (update_ui) {
+
+            if (update_ui && settingsDiv) {
                 if (host) {
-                    settingsDiv.querySelector('input[type="checkbox"]').checked = data.public;
-                    const timelapseInput = settingsDiv.querySelector('input[type="number"]');
-                    if (timelapseInput) {
-                        timelapseInput.value = data.timelapse || 120;
-                    }   
+                    // Delay DOM manipulation slightly to ensure elements are created
+                    setTimeout(() => {
+                        const checkbox = settingsDiv.querySelector('#public-checkbox');
+                        const timelapseInput = settingsDiv.querySelector('#timelapse-input');
+
+                        if (checkbox) checkbox.checked = data.public;
+                        if (timelapseInput) timelapseInput.value = data.timelapse || 120;
+                    }, 0);
                 } else {
                     document.getElementById('public-setting').innerText = `Public: ${data.public ? 'Yes' : 'No'}`;
                     document.getElementById('timelapse-setting').innerText = `Timelapse: ${data.timelapse || 120} seconds`;
                 }
             }
+
             settings = data;
             return data;
         } else {
             console.log("Error fetching settings: " + data.error);
         }
-    }
-    );
+    });
 }
 
 
