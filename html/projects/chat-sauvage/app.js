@@ -540,6 +540,7 @@ function finishPolygon() {
         .addTo(map)
         .bindPopup("Map");
 
+    sendPolygon(polygonPoints);
     polygonPoints = [];
     isDrawingPolygon = false;
 
