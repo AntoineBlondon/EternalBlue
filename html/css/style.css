@@ -221,19 +221,3 @@ button:disabled:focus, button:disabled:hover {
     background-color: #5FA8D3;
     cursor: default;
 }
-
-input {
-    font-family: 'Azeret Mono';
-    border: 2px solid #5FA8D3;
-    background-color: #5FA8D3;
-    color: #392F5A;
-    border-radius: 5px;
-    padding: .4em .6em 0.4em .5em;
-    transition: all ease-in-out 0.2s;
-    margin: 0.5em 0;
-}
-
-input:focus {
-    background-color: #5F78D3;
-    outline: none;
-}
