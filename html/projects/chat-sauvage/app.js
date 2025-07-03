@@ -13,6 +13,7 @@ let settings = {};
 let isDrawingPolygon = false;
 let polygonPoints = [];
 let polygonPreview = null;
+let lastPolygonLayer = null;
 
 showLobbyScreen();
 
@@ -579,6 +580,7 @@ function sendPolygon(polygonCoords) {
     });
 }
 
+
 function getMapData() {
     fetch(`${API}/room/${currentRoom}/map`, {
         method: 'GET',
@@ -592,8 +594,14 @@ function getMapData() {
         const lastEntry = mapData[mapData.length - 1];
         const polygon = lastEntry.content.polygon;
 
+        // Remove the previous polygon from the map if it exists
+        if (lastPolygonLayer) {
+            map.removeLayer(lastPolygonLayer);
+            lastPolygonLayer = null;
+        }
+
         if (polygon && Array.isArray(polygon)) {
-            L.polygon(polygon, { color: 'purple' })
+            lastPolygonLayer = L.polygon(polygon, { color: 'purple' })
                 .addTo(map)
                 .bindPopup(`${lastEntry.username}'s area`);
         }
