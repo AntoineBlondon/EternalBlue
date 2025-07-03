@@ -71,14 +71,9 @@ function showRoomScreen() {
     <h2>In Room: <span id="currentRoomCode"></span></h2>
     
     
-    <div>
+    <div id="map-div">
     <button id="sendLocationButton" onclick="startSendingLocations()">Start sending Location</button>
     <button onclick="getLocations()">Refresh Locations</button>
-        ${host ? `
-    <button onclick="startPolygonDrawing()">Add Polygon</button>
-    <button id="finishPolygonButton" style="display: none;" onclick="finishPolygon()">Finish Polygon</button>
-    <button id="cancelPolygonButton" style="display: none;" onclick="cancelPolygon()">Cancel</button>
-    ` : ''}
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
     </div>
     
@@ -144,6 +139,7 @@ function isHost() {
     .then(res => res.json())
     .then(data => {
         host = (data.users[currentUser] === 'host');
+        
     });
 }
 
@@ -368,6 +364,13 @@ function sendLocation(location) {
 function getLocations() {
     mapMarkers.forEach(marker => map.removeLayer(marker));
     mapMarkers = [];
+    if (host) {
+        document.getElementById('map-div').innerHTML += `
+    <button onclick="startPolygonDrawing()">Add Polygon</button>
+    <button id="finishPolygonButton" style="display: none;" onclick="finishPolygon()">Finish Polygon</button>
+    <button id="cancelPolygonButton" style="display: none;" onclick="cancelPolygon()">Cancel</button>
+    `;
+    }
     getMapData();
 
     fetch(`${API}/room/${currentRoom}/location`, {
