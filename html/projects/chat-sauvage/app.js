@@ -587,13 +587,15 @@ function getMapData() {
     .then(res => res.json())
     .then(data => {
         const mapData = data.map;
-        mapData.forEach(entry => {
-            const polygon = entry.content.polygon;
-            if (polygon && Array.isArray(polygon)) {
-                L.polygon(polygon, { color: 'purple' })
-                    .addTo(map)
-                    .bindPopup(`${entry.username}'s area`);
-            }
-        });
+        if (!Array.isArray(mapData) || mapData.length === 0) return;
+
+        const lastEntry = mapData[mapData.length - 1];
+        const polygon = lastEntry.content.polygon;
+
+        if (polygon && Array.isArray(polygon)) {
+            L.polygon(polygon, { color: 'purple' })
+                .addTo(map)
+                .bindPopup(`${lastEntry.username}'s area`);
+        }
     });
 }
