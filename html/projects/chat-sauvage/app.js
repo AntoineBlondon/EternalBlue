@@ -368,7 +368,7 @@ function getLocations() {
     mapMarkers = [];
     if (host) {
         document.getElementById('poly-buttons').innerHTML = `
-    <button onclick="startPolygonDrawing()">Add Polygon</button>
+    <button id="startPolygonButton" onclick="startPolygonDrawing()">Add Polygon</button>
     <button id="finishPolygonButton" style="display: none;" onclick="finishPolygon()">Finish Polygon</button>
     <button id="cancelPolygonButton" style="display: none;" onclick="cancelPolygon()">Cancel</button>
     `;
@@ -520,6 +520,7 @@ function startPolygonDrawing() {
     isDrawingPolygon = true;
     polygonPoints = [];
 
+    document.getElementById('startPolygonButton').style.display = 'none';
     document.getElementById('finishPolygonButton').style.display = 'inline';
     document.getElementById('cancelPolygonButton').style.display = 'inline';
 
@@ -545,6 +546,7 @@ function finishPolygon() {
     polygonPoints = [];
     isDrawingPolygon = false;
 
+    document.getElementById('startPolygonButton').style.display = 'inline';
     document.getElementById('finishPolygonButton').style.display = 'none';
     document.getElementById('cancelPolygonButton').style.display = 'none';
 }
@@ -557,6 +559,7 @@ function cancelPolygon() {
         polygonPreview = null;
     }
 
+    document.getElementById('startPolygonButton').style.display = 'inline';
     document.getElementById('finishPolygonButton').style.display = 'none';
     document.getElementById('cancelPolygonButton').style.display = 'none';
 }
