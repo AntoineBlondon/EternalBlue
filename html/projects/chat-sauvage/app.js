@@ -74,6 +74,7 @@ function showRoomScreen() {
     <div id="map-div">
     <button id="sendLocationButton" onclick="startSendingLocations()">Start sending Location</button>
     <button onclick="getLocations()">Refresh Locations</button>
+    <div id="poly-buttons"></>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
     </div>
     
@@ -365,7 +366,7 @@ function getLocations() {
     mapMarkers.forEach(marker => map.removeLayer(marker));
     mapMarkers = [];
     if (host) {
-        document.getElementById('map-div').innerHTML += `
+        document.getElementById('poly-buttons').innerHTML = `
     <button onclick="startPolygonDrawing()">Add Polygon</button>
     <button id="finishPolygonButton" style="display: none;" onclick="finishPolygon()">Finish Polygon</button>
     <button id="cancelPolygonButton" style="display: none;" onclick="cancelPolygon()">Cancel</button>
