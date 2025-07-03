@@ -93,7 +93,7 @@ function showRoomScreen() {
     
     </div>
 
-    <h3>Leave Room</h3>
+    <h2>Leave Room</h2>
     <button onclick="leaveRoom()">Leave</button>
     <p id="leaveStatus"></p>
   </div>
@@ -457,7 +457,7 @@ function getSettings(room, update_ui = true) {
             document.getElementById('submit-button').onclick = setSettings;
         } else {
             settingsContainer.innerHTML = `
-                <h3>Settings</h3>
+                <h2>Settings</h2>
                 <button id="refresh-settings">Refresh</button>
                 <p id='public-setting'></p>
                 <p id='timelapse-setting'></p>
