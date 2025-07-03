@@ -75,6 +75,8 @@ function showRoomScreen() {
     <button id="sendLocationButton" onclick="startSendingLocations()">Start sending Location</button>
     <button onclick="getLocations()">Refresh Locations</button>
     <button onclick="startPolygonDrawing()">Add Polygon</button>
+    <button id="finishPolygonButton" style="display: none;" onclick="finishPolygon()">Finish Polygon</button>
+    <button id="cancelPolygonButton" style="display: none;" onclick="cancelPolygon()">Cancel</button>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
     </div>
     
@@ -106,40 +108,22 @@ function showRoomScreen() {
     setTimeout(() => {
         if (!map) {
             map = L.map('map').setView([0, 0], ZOOM_LEVEL);
-                        map.on('click', function (e) {
+            map.on('click', function (e) {
                 if (!isDrawingPolygon) return;
 
                 const latlng = [e.latlng.lat, e.latlng.lng];
                 polygonPoints.push(latlng);
 
-                // Optional: show marker for each point
+                // Optional: show individual anchor
                 L.circleMarker(latlng, { radius: 5, color: 'red' }).addTo(map);
 
-                // Live preview
+                // Update preview
                 if (polygonPreview) {
                     map.removeLayer(polygonPreview);
                 }
-                polygonPreview = L.polygon(polygonPoints, { color: 'blue', dashArray: '5, 5' }).addTo(map);
-                });
-            map.on('dblclick', function () {
-                if (!isDrawingPolygon || polygonPoints.length < 3) {
-                    alert("You need at least 3 points to make a polygon.");
-                    return;
-                }
+                polygonPreview = L.polygon(polygonPoints, { color: 'blue', dashArray: '4, 4' }).addTo(map);
+            });
 
-                if (polygonPreview) {
-                    map.removeLayer(polygonPreview);
-                    polygonPreview = null;
-                }
-
-                // Final polygon
-                L.polygon(polygonPoints, { color: 'green' })
-                    .addTo(map)
-                    .bindPopup("Custom Polygon");
-
-                isDrawingPolygon = false;
-                polygonPoints = [];
-                });
 
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -524,5 +508,41 @@ function startPolygonDrawing() {
     isDrawingPolygon = true;
     polygonPoints = [];
 
-    alert("Click on the map to add polygon points. Double-click to finish.");
+    document.getElementById('finishPolygonButton').style.display = 'inline';
+    document.getElementById('cancelPolygonButton').style.display = 'inline';
+
+    alert("Click on the map to add polygon points.");
+}
+
+function finishPolygon() {
+    if (polygonPoints.length < 3) {
+        alert("Need at least 3 points to form a polygon.");
+        return;
+    }
+
+    if (polygonPreview) {
+        map.removeLayer(polygonPreview);
+        polygonPreview = null;
+    }
+
+    L.polygon(polygonPoints, { color: 'green' })
+        .addTo(map)
+        .bindPopup("Custom Polygon");
+
+    polygonPoints = [];
+    isDrawingPolygon = false;
+
+    document.getElementById('finishPolygonButton').style.display = 'none';
+}
+function cancelPolygon() {
+    isDrawingPolygon = false;
+    polygonPoints = [];
+
+    if (polygonPreview) {
+        map.removeLayer(polygonPreview);
+        polygonPreview = null;
+    }
+
+    document.getElementById('finishPolygonButton').style.display = 'none';
+    document.getElementById('cancelPolygonButton').style.display = 'none';
 }
