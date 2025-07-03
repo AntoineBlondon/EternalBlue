@@ -83,10 +83,12 @@ function showRoomScreen() {
     
     <div style="display: flex; gap: .5em;" id="userList"></div>
 
+    <h2>Chat</h2>
     <div id="messagesList"></div>
     <input id="messageInput" placeholder="Type your message here" />
     <button onclick="sendMessage()">Send</button>
     
+
     <div id="settings">
     
     </div>
@@ -444,7 +446,7 @@ function getSettings(room, update_ui = true) {
 
         if (host) {
             settingsContainer.innerHTML = `
-                <h3>Settings</h3>
+                <h2>Settings</h2>
                 <button id="refresh-settings">Refresh</button>
                 <p>Public Room</p>
                 <input type="checkbox" id="public-checkbox" />
