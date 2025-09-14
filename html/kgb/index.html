@@ -9,19 +9,13 @@
         iframe {
             margin: 20px auto;
             display: block;
-        }
-        #desktop {
-            display: block;
-        }
-        #mobile {
-            display: none;
+            width: 800px;
+            height: 600px;
         }
         @media (max-width: 800px) {
-            #desktop {
-                display: none;
-            }
-            #mobile {
-                display: block;
+            iframe {
+                width: 90vh;
+                height: 50vh;
             }
         }
     </style>
@@ -35,7 +29,6 @@
         </div>
     </header>
 
-<iframe id="desktop"src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FParis&showPrint=0&hl=fr&src=ZWFlMDU5ZTZhNDliMTcwMTM1MGU5YjA0YjYwYWZkOGQ2YjMwZTk1Y2JkZTVhMmFkZTBiNDM2N2UzYWZiNTk1YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%234285f4" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-<iframe id="mobile" src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FParis&showPrint=0&hl=fr&src=ZWFlMDU5ZTZhNDliMTcwMTM1MGU5YjA0YjYwYWZkOGQ2YjMwZTk1Y2JkZTVhMmFkZTBiNDM2N2UzYWZiNTk1YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%234285f4" style="border:solid 1px #777" width="600" height="800" frameborder="0" scrolling="no"></iframe>
+<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FParis&showPrint=0&hl=fr&src=ZWFlMDU5ZTZhNDliMTcwMTM1MGU5YjA0YjYwYWZkOGQ2YjMwZTk1Y2JkZTVhMmFkZTBiNDM2N2UzYWZiNTk1YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%234285f4" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 </body>
 </html>
