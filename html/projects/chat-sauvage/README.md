@@ -2,7 +2,7 @@
 
 **A web app for sharing real-time locations in private rooms.**
 
-> Pour la version française, voir [ici](./README_fr.md)
+> Pour la version française, voir [ici](./README_fr.md) 
 
 ---
 

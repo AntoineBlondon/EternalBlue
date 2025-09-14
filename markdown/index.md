@@ -17,15 +17,11 @@ it's nice
 
 ## Other things
 
-some other things I did
+some other things I did (this is a mess)
 
 - a [cémantix-style web game](https://mantix.azureblue.me)
 
 - an online [timesup website](https://kgbtimesup.vercel.app/)
-
-- a [toki pona training website](https://miwilesona.pythonanywhere.com)
-
-- a (very very) [smol walkie talkie web app](https://walkieapp.pythonanywhere.com/)
 
 
 <br>
